@@ -1,0 +1,5 @@
+*.log
+*.out
+*.aux
+**/__pycache__
+.DS_Store
