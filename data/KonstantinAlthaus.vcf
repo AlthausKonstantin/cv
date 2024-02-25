@@ -8,11 +8,8 @@ EMAIL;type=INTERNET;type=pref:althaus.konstantin.95@gmail.com
 TEL;type=CELL;type=VOICE;type=pref:00491516131553
 ADR;type=HOME;type=pref:;;;Munich;;81675;Germany
 X-SOCIALPROFILE;type=linkedin:https://www.linkedin.com/in/althauskonstantin/
-X-SOCIALPROFILE;type=twitter:http://twitter.com/therealkonstantin
 item1.URL;type=pref:https://github.com/AlthausKonstantin
 item1.X-ABLabel:GitHub
-item2.URL:www.example.com
-item2.X-ABLabel:_$!<HomePage>!$_
 BDAY:1995-05-19
 PHOTO;ENCODING=b;TYPE=JPEG:/9j/4AAQSkZJRgABAQAAkACQAAD/4QB0RXhpZgAATU0AKgAA
  AAgABAEaAAUAAAABAAAAPgEbAAUAAAABAAAARgEoAAMAAAABAAIAAIdpAAQAAAABAAAATgAAAA

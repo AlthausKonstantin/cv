@@ -47,16 +47,18 @@ def make_source_files():
 def parser_personal_info(path_to_vcard: Path, path_to_photo: Path) -> dict:
     with open(path_to_vcard, "r") as f:
         vcard = vobject.readOne(f.read())
-    vcard.prettyPrint()
-    linkedin = None
     for social_profile in vcard.contents["x-socialprofile"]:
         if social_profile.type_param == "linkedin":
             linkedin = social_profile.value
+            linkedin = linkedin.replace("https://www.linkedin.com/in/", "")
+            linkedin = linkedin.replace("/", "")
     github = None
     for url_idx, url in enumerate(vcard.contents["url"]):
         url_type = list(vcard.contents["x-ablabel"])[url_idx]
         if url_type.value.lower() == "github":
             github = url.value
+            github = github.replace("https://github.com/", "")
+            github = github.replace("/", "")
     personal_info = {
         "name": vcard.fn.value,
         "job_title": vcard.title.value,
