@@ -1,10 +1,13 @@
 import pandas as pd
+import vobject
 from pyshorteners import Shortener
 from re import findall
 from jinja2 import FileSystemLoader, Environment
 import tempfile
 import subprocess
 from constants import SECTIONS
+from constants import VCARD
+from constants import PHOTO
 from constants import DATA_DIR
 from constants import TEX_DIR
 from constants import PROJECT_DIR
@@ -30,8 +33,49 @@ def compile_main():
 
 
 def make_source_files():
+    # make personal information
+    personal_info = parser_personal_info(VCARD, PHOTO)
+    fill_template(
+        Path("templates/personal_info_template.tex"),
+        personal_info,
+        TEX_DIR / "personal_info.tex",
+    )
     for sec in SECTIONS:
         csv_to_tex(sec, DATA_DIR, TEX_DIR)
+
+
+def parser_personal_info(path_to_vcard: Path, path_to_photo: Path) -> dict:
+    with open(path_to_vcard, "r") as f:
+        vcard = vobject.readOne(f.read())
+    vcard.prettyPrint()
+    linkedin = None
+    for social_profile in vcard.contents["x-socialprofile"]:
+        if social_profile.type_param == "linkedin":
+            linkedin = social_profile.value
+    github = None
+    for url_idx, url in enumerate(vcard.contents["url"]):
+        url_type = list(vcard.contents["x-ablabel"])[url_idx]
+        if url_type.value.lower() == "github":
+            github = url.value
+    personal_info = {
+        "name": vcard.fn.value,
+        "job_title": vcard.title.value,
+        "email": vcard.email.value,
+        "phone": vcard.tel.value,
+        "location": f"{vcard.adr.value.city}, {vcard.adr.value.country}",
+        "github": github,
+        "linkedin": linkedin,
+        "photo": path_to_photo.with_suffix('')
+    }
+    return personal_info
+
+
+def fill_template(template: Path, data: dict, output: Path):
+    env = Environment(loader=FileSystemLoader(template.parent),
+                      variable_start_string="[[",
+                      variable_end_string="]]")
+    temp = env.get_template(template.name)
+    output.write_text(temp.render(data))
 
 
 def csv_to_tex(section, data_dir, tex_dir):
