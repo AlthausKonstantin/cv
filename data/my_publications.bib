@@ -1,0 +1,29 @@
+% Encoding: UTF-8
+
+@Article{Althaus2023,
+  author        = {Konstantin Althaus and Iason Papaioannou and Elisabeth Ullmann},
+  title         = {Consensus-based rare event estimation},
+  year          = {2023},
+  month         = apr,
+  abstract      = {In this paper, we introduce a new algorithm for rare event estimation based on adaptive importance sampling. We consider a smoothed version of the optimal importance sampling density, which is approximated by an ensemble of interacting particles. The particle dynamics is governed by a McKean-Vlasov stochastic differential equation, which was introduced and analyzed in (Carrillo et al., Stud. Appl. Math. 148:1069-1140, 2022) for consensus-based sampling and optimization of posterior distributions arising in the context of Bayesian inverse problems. We develop automatic updates for the internal parameters of our algorithm. This includes a novel time step size controller for the exponential Euler method, which discretizes the particle dynamics. The behavior of all parameter updates depends on easy to interpret accuracy criteria specified by the user. We show in numerical experiments that our method is competitive to state-of-the-art adaptive importance sampling algorithms for rare event estimation, namely a sequential importance sampling method and the ensemble Kalman filter for rare event estimation.},
+  archiveprefix = {arXiv},
+  eprint        = {2304.09077},
+  file          = {:http\://arxiv.org/pdf/2304.09077v1:PDF},
+  keywords      = {stat.CO, cs.NA, math.NA, 60H10, 62L12, 65C30, 65N30},
+  primaryclass  = {stat.CO},
+}
+
+@Article{Utkarsh2022,
+  author        = {Utkarsh and Chris Elrod and Yingbo Ma and Christopher Rackauckas and Konstantin Althaus},
+  title         = {Parallelizing Explicit and Implicit Extrapolation Methods for Ordinary Differential Equations},
+  year          = {2022},
+  month         = jul,
+  abstract      = {Numerically solving ordinary differential equations (ODEs) is a naturally serial process and as a result the vast majority of ODE solver software are serial. In this manuscript we developed a set of parallelized ODE solvers using extrapolation methods which exploit "parallelism within the method" so that arbitrary user ODEs can be parallelized. We describe the specific choices made in the implementation of the explicit and implicit extrapolation methods which allow for generating low overhead static schedules to then exploit with optimized multi-threaded implementations. We demonstrate that while the multi-threading gives a noticeable acceleration on both explicit and implicit problems, the explicit parallel extrapolation methods gave no significant improvement over state-of-the-art even with a multi-threading advantage against current optimized high order Runge-Kutta tableaus. However, we demonstrate that the implicit parallel extrapolation methods are able to achieve state-of-the-art performance (2x-4x) on standard multicore x86 CPUs for systems of $<200$ stiff ODEs solved at low tolerance, a typical setup for a vast majority of users of high level language equation solver suites. The resulting method is distributed as the first widely available open source software for within-method parallel acceleration targeting typical modest compute architectures.},
+  archiveprefix = {arXiv},
+  eprint        = {2207.08135},
+  file          = {:http\://arxiv.org/pdf/2207.08135v2:PDF},
+  keywords      = {math.NA, cs.MS, cs.NA},
+  primaryclass  = {math.NA},
+}
+
+@Comment{jabref-meta: databaseType:bibtex;}

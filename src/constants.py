@@ -9,6 +9,7 @@ VCARD = DATA_DIR / 'KonstantinAlthaus.vcf'
 TEMPLATES_DIR = PROJECT_DIR / "templates"
 PERSONAL_INFO_TEMPLATE = TEMPLATES_DIR / "personal_info_template.tex"
 PHOTO = DATA_DIR / "KonstantinAlthaus.jpeg"
+BIBLIOGRAPHY = DATA_DIR / "my_publications.bib"
 LATEX_COMMANDS = {
     "projects": "cvproject",
     "experience": "cvevent",

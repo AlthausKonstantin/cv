@@ -6,6 +6,7 @@ from jinja2 import FileSystemLoader, Environment
 import tempfile
 import subprocess
 from constants import SECTIONS
+from constants import BIBLIOGRAPHY
 from constants import VCARD
 from constants import PHOTO
 from constants import DATA_DIR
@@ -18,16 +19,27 @@ from pathlib import Path
 
 def compile_main():
     with tempfile.TemporaryDirectory() as dir:
-        subprocess.run(
-            [
-                "lualatex",
-                "-synctex=1",
-                "--interaction=nonstopmode",
-                f"--output-directory={dir}",
-                MAIN_TEX_FILE,
-            ],
-            cwd=TEX_DIR,
-        )
+        for i in range(2):
+            # complie twice to get the references right
+            subprocess.run(
+                [
+                    "lualatex",
+                    "-synctex=1",
+                    "--interaction=nonstopmode",
+                    f"--output-directory={dir}",
+                    MAIN_TEX_FILE,
+                ],
+                cwd=TEX_DIR,
+            )
+            if i == 0:
+                subprocess.run(
+                    [
+                        "biber",
+                        f"--output-directory={dir}",
+                        "main",
+                    ],
+                    cwd=TEX_DIR,
+                )
         output = Path(dir) / "main.pdf"
         output.rename(PROJECT_DIR / "cv.pdf")
 
@@ -40,6 +52,13 @@ def make_source_files():
         personal_info,
         TEX_DIR / "personal_info.tex",
     )
+    # make bibliography
+    fill_template(
+        Path("templates/bibliography_template.tex"),
+        {"bibliography": BIBLIOGRAPHY},
+        TEX_DIR / "bibliography.tex",
+    )
+    # make sections
     for sec in SECTIONS:
         csv_to_tex(sec, DATA_DIR, TEX_DIR)
 

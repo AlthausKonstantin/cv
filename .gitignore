@@ -3,3 +3,6 @@
 *.aux
 **/__pycache__
 .DS_Store
+*.bib.bak
+*.bib.sav
+*bib.sav.bak

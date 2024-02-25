@@ -35,6 +35,7 @@
 %% See http://texdoc.net/pkg/fontawesome5 and http://texdoc.net/pkg/academicons for full list of symbols. You MUST compile with XeLaTeX or LuaLaTeX if you want to use academicons.
 \usepackage{fontspec}
 \usepackage{fontawesome5}
+\usepackage{biblatex}
 % Change the page layout if you need to
 \geometry{left=1.2cm,right=1.2cm,top=1cm,bottom=1cm,columnsep=0.75cm}
 
@@ -95,12 +96,11 @@
 \renewcommand{\ratingmarker}{\faCircle}
 
 %% sample.bib contains your publications
-%% \addbibresource{sample.bib}
-
+\input{bibliography.tex}
 \begin{document}
 \input{personal_info.tex}
 \makecvheader
-%% Depending on your tastes, you may want to make fonts of itemize environments slightly smaller
+%% Depending on your tastes, you may want to make fonts of itemize environments slightly smalleo
 % \AtBeginEnvironment{itemize}{\small}
 
 %% Set the left/right column width ratio to 6:4.
@@ -232,5 +232,20 @@
 	\cvsection{Projects}
 	\input{projects.tex}
 	% ----- PROJECTS -----
+
+	% ----- PUBLICATIONS -----
+	\cvsection{Publications}
+
+	%% Specify your last name(s) and first name(s) as given in the .bib to automatically bold your own name in the publications list.
+	%% One caveat: You need to write \bibnamedelima where there's a space in your name for this to work properly; or write \bibnamedelimi if you use initials in the .bib
+	%% You can specify multiple names, especially if you have changed your name or if you need to highlight multiple authors.
+	% \mynames{Konstantin\bibnamedelima Althaus,
+	% 	Konstantin/Althaus,
+	% 	Lim/L.\bibnamedelimi T.}
+	%% MAKE SURE THERE IS NO SPACE AFTER THE FINAL NAME IN YOUR \mynames LIST
+
+	\nocite{*}
+	\printbibliography[heading=pubtype,title={\printinfo{\faFile*[regular]}{Journal Articles}},type=article]
+	% ----- PUBLICATIONS -----
 \end{paracol}
 \end{document}
