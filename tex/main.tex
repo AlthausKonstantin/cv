@@ -108,144 +108,101 @@
 
 % Start a 2-column paracol. Both the left and right columns will automatically
 % break across pages if things get too long.
-\begin{paracol}{2}
-	% ----- STRENGTHS -----
-	\cvsection{Strengths}
-	\cvtag{One}
-	\cvtag{Two}
-	\cvtag{Three}
-	\cvtag{Four}
-	\cvtag{Five}
-	\cvtag{Six}
-	\cvtag{Seven}
-	\cvtag{Eight}
-	\cvtag{Nine}
-	\cvtag{Ten}
-	\medskip
+\begin{sloppypar}
+	\begin{paracol}{2}
+		% ----- TAGS ------
+		\input{tags.tex}
+		% ----- TAGS ------
 
-	\cvtag{Red}
-	\cvtag{Yellow}
-	\cvtag{Blue}
-	\cvtag{Green}
-	\cvtag{Violet}
-	\cvtag{Orange}
-	% ----- STRENGTHS -----
 
-	% ----- LEARNING -----
-	\cvsection{Learning}
-	\cvtag{Uno}
-	\cvtag{Dos}
-	\cvtag{Tres}
-	\cvtag{Cuatro}
-	\cvtag{Cinco}
-	\cvtag{Seis}
-	\cvtag{Siete}
-	\cvtag{Ocho}
-	\cvtag{Nueve}
-	\cvtag{Diez}
-	\medskip
+		% ----- LANGUAGES -----
+		\cvsection{Languages}
+		\cvlang{German}{Native}\\
+		\divider
+		\cvlang{English}{Fluent / C2}
+		%% Yeah I didn't spend too much time making all the
+		%% spacing consistent... sorry. Use \smallskip, \medskip,
+		%% \bigskip, \vpsace etc to make ajustments.
+		% ----- LANGUAGES -----
 
-	\cvtag{Rojo}
-	\cvtag{Amarillo}
-	\cvtag{Azul}
-	\cvtag{Verde}
-	\cvtag{Violeta}
-	\cvtag{Naranja}
-	\cvtag{Marron}
-	\cvtag{Blanco}
-	\cvtag{Gris}
-	\cvtag{Negro}
-	\smallskip
-	% ----- LEARNING -----
+		% ----- REFERENCES -----
+		\cvsection{References}
+		\cvreference{Ref 1}{ref-1}
+		\medskip
 
-	% ----- LANGUAGES -----
-	\cvsection{Languages}
-	\cvlang{Lang 1}{Native}\\
-	\divider
+		\cvreference{Ref 2}{ref-2}
+		\medskip
 
-	\cvlang{Lang 2}{Basic / A2}
-	%% Yeah I didn't spend too much time making all the
-	%% spacing consistent... sorry. Use \smallskip, \medskip,
-	%% \bigskip, \vpsace etc to make ajustments.
-	% ----- LANGUAGES -----
+		\cvreference{Ref 3}{ref-3}
+		% ----- REFERENCES -----
 
-	% ----- REFERENCES -----
-	\cvsection{References}
-	\cvreference{Ref 1}{ref-1}
-	\medskip
+		% ----- MOST PROUD -----
+		% \cvsection{Most Proud of}
 
-	\cvreference{Ref 2}{ref-2}
-	\medskip
+		% \cvachievement{\faTrophy}{Fantastic Achievement}{and some details about it}\\
+		% \divider
+		% \cvachievement{\faHeartbeat}{Another achievement}{more details about it of course}\\
+		% \divider
+		% \cvachievement{\faHeartbeat}{Another achievement}{more details about it of course}
+		% ----- MOST PROUD -----
 
-	\cvreference{Ref 3}{ref-3}
-	% ----- REFERENCES -----
+		% \cvsection{A Day of My Life}
 
-	% ----- MOST PROUD -----
-	% \cvsection{Most Proud of}
+		% Adapted from @Jake's answer from http://tex.stackexchange.com/a/82729/226
+		% \wheelchart{outer radius}{inner radius}{
+		% comma-separated list of value/text width/color/detail}
+		% \wheelchart{1.5cm}{0.5cm}{%
+		%   6/8em/accent!30/{Sleep,\\beautiful sleep},
+		%   3/8em/accent!40/Hopeful novelist by night,
+		%   8/8em/accent!60/Daytime job,
+		%   2/10em/accent/Sports and relaxation,
+		%   5/6em/accent!20/Spending time with family
+		% }
 
-	% \cvachievement{\faTrophy}{Fantastic Achievement}{and some details about it}\\
-	% \divider
-	% \cvachievement{\faHeartbeat}{Another achievement}{more details about it of course}\\
-	% \divider
-	% \cvachievement{\faHeartbeat}{Another achievement}{more details about it of course}
-	% ----- MOST PROUD -----
+		% use ONLY \newpage if you want to force a page break for
+		% ONLY the current column
+		\newpage
 
-	% \cvsection{A Day of My Life}
+		%% Switch to the right column. This will now automatically move to the second
+		%% page if the content is too long.
+		\switchcolumn
 
-	% Adapted from @Jake's answer from http://tex.stackexchange.com/a/82729/226
-	% \wheelchart{outer radius}{inner radius}{
-	% comma-separated list of value/text width/color/detail}
-	% \wheelchart{1.5cm}{0.5cm}{%
-	%   6/8em/accent!30/{Sleep,\\beautiful sleep},
-	%   3/8em/accent!40/Hopeful novelist by night,
-	%   8/8em/accent!60/Daytime job,
-	%   2/10em/accent/Sports and relaxation,
-	%   5/6em/accent!20/Spending time with family
-	% }
+		% ----- ABOUT ME -----
+		\cvsection{About Me}
+		\begin{quote}
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+		\end{quote}
+		% ----- ABOUT ME -----
 
-	% use ONLY \newpage if you want to force a page break for
-	% ONLY the current column
-	\newpage
+		% ----- EXPERIENCE -----
+		\cvsection{Experience}
+		\input{experience.tex}
+		% ----- EXPERIENCE -----
 
-	%% Switch to the right column. This will now automatically move to the second
-	%% page if the content is too long.
-	\switchcolumn
+		% ----- EDUCATION -----
+		\cvsection{Education}
+		\input{education.tex}
+		% ----- EDUCATION -----
 
-	% ----- ABOUT ME -----
-	\cvsection{About Me}
-	\begin{quote}
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-	\end{quote}
-	% ----- ABOUT ME -----
+		% ----- PROJECTS -----
+		\cvsection{Projects}
+		\input{projects.tex}
+		% ----- PROJECTS -----
 
-	% ----- EXPERIENCE -----
-	\cvsection{Experience}
-	\input{experience.tex}
-	% ----- EXPERIENCE -----
+		% ----- PUBLICATIONS -----
+		\cvsection{Publications}
 
-	% ----- EDUCATION -----
-	\cvsection{Education}
-	\input{education.tex}
-	% ----- EDUCATION -----
+		%% Specify your last name(s) and first name(s) as given in the .bib to automatically bold your own name in the publications list.
+		%% One caveat: You need to write \bibnamedelima where there's a space in your name for this to work properly; or write \bibnamedelimi if you use initials in the .bib
+		%% You can specify multiple names, especially if you have changed your name or if you need to highlight multiple authors.
+		% \mynames{Konstantin\bibnamedelima Althaus,
+		% 	Konstantin/Althaus,
+		% 	Lim/L.\bibnamedelimi T.}
+		%% MAKE SURE THERE IS NO SPACE AFTER THE FINAL NAME IN YOUR \mynames LIST
 
-	% ----- PROJECTS -----
-	\cvsection{Projects}
-	\input{projects.tex}
-	% ----- PROJECTS -----
-
-	% ----- PUBLICATIONS -----
-	\cvsection{Publications}
-
-	%% Specify your last name(s) and first name(s) as given in the .bib to automatically bold your own name in the publications list.
-	%% One caveat: You need to write \bibnamedelima where there's a space in your name for this to work properly; or write \bibnamedelimi if you use initials in the .bib
-	%% You can specify multiple names, especially if you have changed your name or if you need to highlight multiple authors.
-	% \mynames{Konstantin\bibnamedelima Althaus,
-	% 	Konstantin/Althaus,
-	% 	Lim/L.\bibnamedelimi T.}
-	%% MAKE SURE THERE IS NO SPACE AFTER THE FINAL NAME IN YOUR \mynames LIST
-
-	\nocite{*}
-	\printbibliography[heading=pubtype,title={\printinfo{\faFile*[regular]}{Journal Articles}},type=article]
-	% ----- PUBLICATIONS -----
-\end{paracol}
+		\nocite{*}
+		\printbibliography[heading=pubtype,title={\printinfo{\faFile*[regular]}{Journal Articles}},type=article]
+		% ----- PUBLICATIONS -----
+	\end{paracol}
+\end{sloppypar}
 \end{document}
