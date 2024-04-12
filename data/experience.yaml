@@ -1,0 +1,66 @@
+- title: Intern Research and Development
+  punchline: Make coupled FE-models amenable to vibro-acoustic analysis
+  start: 2018-04-01
+  end: 2018-08-01
+  employee: BMW
+  industry: Automotive
+  location: Munich
+  description:
+    - Error analysis of coupled systems in MATLAB
+    - Research and development of order reduction methods for FE-models
+    - Documentation of research results with LaTeX
+  tag:
+    - Matlab
+    - LaTeX
+    - Research
+- title: Working student software development
+  punchline: Optimize lay-up technology for complex composites
+  employee: Cevotec
+  end: 2019-07-01
+  start: 2019-04-01
+  industry: Robotics
+  location: Munich
+  description:
+    - Implementation and parallelisation of optimisation algorithms in C++
+    - Development of new optimisation methods for fibre patch placement
+    - Development of unit and integration tests
+  tag:
+    - C++
+    - Jira
+    - Bitbucket
+    - Julia
+    - Algorithms
+- title: Working Student financial risk analysis
+  punchline: Show asset managers what the real risks in their portfolio are
+  employee: MEAG
+  industry: Asset Management
+  location: Munich
+  start: 2021-12-01
+  end: 2022-07-01
+  description:
+    - Automatic parsing and compiling of risk data pertaining to financial assets
+      in R
+    - Automatic visualisation of risk metrics in PowerBi, PowerPoint and interactive
+      HTML reports in R
+    - Creating custom R packages including unit testing and documentation
+  tag:
+    - R
+    - Tidyverse
+    - Azure DevOps
+    - PowerBi
+- title: Junior actuary for private health insurance
+  punchline: Automate actuarial computations in web dashboards
+  employee: ERGO
+  industry: Health Insurance
+  location: Cologne
+  start: 2022-12-01
+  end: 2023-04-30
+  description:
+    - Automatisation and testing of  actuarial computations in R
+    - Developing GUIs for automated actuarial workflows
+    - Implementing a CI/CD pipeline
+  tag:
+    - R
+    - Shiny
+    - GitHub
+    - Actuary

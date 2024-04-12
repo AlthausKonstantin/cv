@@ -91,17 +91,15 @@
 \renewcommand{\cvsubsectionfont}{\large\bfseries}
 
 % Change the bullets for itemize and rating marker
-% for \cvskill if you want to
 \renewcommand{\itemmarker}{{\small\textbullet}}
 \renewcommand{\ratingmarker}{\faCircle}
 
-%% sample.bib contains your publications
 \input{bibliography.tex}
+
+
 \begin{document}
 \input{personal_info.tex}
 \makecvheader
-%% Depending on your tastes, you may want to make fonts of itemize environments slightly smalleo
-% \AtBeginEnvironment{itemize}{\small}
 
 %% Set the left/right column width ratio to 6:4.
 \columnratio{0.25}
@@ -114,31 +112,21 @@
 		\input{tags.tex}
 		% ----- TAGS ------
 
-
 		% ----- LANGUAGES -----
 		\cvsection{Languages}
 		\cvlang{German}{Native}\\
 		\divider
 		\cvlang{English}{Fluent / C2}
-		%% Yeah I didn't spend too much time making all the
-		%% spacing consistent... sorry. Use \smallskip, \medskip,
-		%% \bigskip, \vpsace etc to make ajustments.
 		% ----- LANGUAGES -----
 
 		% ----- REFERENCES -----
 		\cvsection{References}
-		\cvreference{Ref 1}{ref-1}
-		\medskip
+		\cvreference{name}{position}{phone}{mail}{url}{description}
 
-		\cvreference{Ref 2}{ref-2}
-		\medskip
-
-		\cvreference{Ref 3}{ref-3}
 		% ----- REFERENCES -----
 
 		% ----- MOST PROUD -----
 		% \cvsection{Most Proud of}
-
 		% \cvachievement{\faTrophy}{Fantastic Achievement}{and some details about it}\\
 		% \divider
 		% \cvachievement{\faHeartbeat}{Another achievement}{more details about it of course}\\
@@ -180,8 +168,10 @@
 		% ----- EXPERIENCE -----
 
 		% ----- EDUCATION -----
-		\cvsection{Education}
-		\input{education.tex}
+		\begin{breakfreeunit}
+			\cvsection{Education}
+			\input{education.tex}
+		\end{breakfreeunit}
 		% ----- EDUCATION -----
 
 		% ----- PROJECTS -----
@@ -190,18 +180,11 @@
 		% ----- PROJECTS -----
 
 		% ----- PUBLICATIONS -----
-		\cvsection{Publications}
-
-		%% Specify your last name(s) and first name(s) as given in the .bib to automatically bold your own name in the publications list.
-		%% One caveat: You need to write \bibnamedelima where there's a space in your name for this to work properly; or write \bibnamedelimi if you use initials in the .bib
-		%% You can specify multiple names, especially if you have changed your name or if you need to highlight multiple authors.
-		% \mynames{Konstantin\bibnamedelima Althaus,
-		% 	Konstantin/Althaus,
-		% 	Lim/L.\bibnamedelimi T.}
-		%% MAKE SURE THERE IS NO SPACE AFTER THE FINAL NAME IN YOUR \mynames LIST
-
-		\nocite{*}
-		\printbibliography[heading=pubtype,title={\printinfo{\faFile*[regular]}{Journal Articles}},type=article]
+		\begin{breakfreeunit}
+			\cvsection{Publications}
+			\nocite{*}
+			\printbibliography[heading=pubtype,title={\printinfo{\faFile*[regular]}{Journal Articles}},type=article]
+		\end{breakfreeunit}
 		% ----- PUBLICATIONS -----
 	\end{paracol}
 \end{sloppypar}

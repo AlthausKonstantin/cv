@@ -1,0 +1,25 @@
+- description_1: "Implementation of a time integrator in Julia based on my bachelor\u2019\
+    s thesis."
+  description_2: Contribution to the scientific computing project  DifferentialEquations.jl
+  description_3: Basis for one of the fastest state of the art explicit extrapolation
+    methods.
+  end: '2019-05-01'
+  start: '2019-03-01'
+  subtitle: "Publication of my bachelor\u2019s thesis"
+  tag_1: .nan
+  tag_2: .nan
+  tag_3: .nan
+  title: Explicit Extrapolation Methods
+  url_1: https://github.com/AlthausKonstantin/Extrapolation
+- description_1: Development of a state of the art rare event estimation method.
+  description_2: Implementation as a professional Python package.
+  description_3: Using containerisation to run numerical experiments on the Google
+    Cloud.
+  end: '2022-07-01'
+  start: '2021-11-01'
+  subtitle: "Publication of my master\u2019s thesis"
+  tag_1: .nan
+  tag_2: .nan
+  tag_3: .nan
+  title: Rare Event Estimation
+  url_1: https://github.com/AlthausKonstantin/rareeventestimation

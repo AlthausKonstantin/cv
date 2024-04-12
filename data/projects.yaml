@@ -1,0 +1,56 @@
+- title: Explicit Extrapolation Methods
+  subtitle: Publication of my bachelor thesis
+  punchline: My bachelor thesis is the basis for one of the fastest state of the art
+    explicit extrapolation methods
+  description:
+    - Implementation of a time integrator in Julia based on my bachelor's thesis
+    - Contribution to the scientific computing project DifferentialEquations.jl
+    - Publication of the results in the IEEE journal
+  start: 2019-03-01
+  end: 2019-05-01
+  tag:
+    - Julia
+    - GitHub
+    - Open Source
+    - Research
+  urls:
+    - github: https://github.com/AlthausKonstantin/Extrapolation
+- title: Rare Event Estimation
+  subtitle: Publication of my master thesis
+  punchline: My master thesis is so groundbreaking, it is a publication in a top journal
+  start: 2021-11-01
+  end: 2022-07-01
+  description:
+    - Development of a state of the art rare event estimation method
+    - Implementation as a professional Python package
+    - Using containerisation to run numerical experiments on the Google Cloud
+    - Publication of the results in the SIAM journal
+  tag:
+    - Python
+    - CI/CD Pipelines
+    - GitHub
+    - Docker
+    - Google Cloud
+    - Numerical Experiments
+    - Data Science
+    - Open Source
+    - Research
+  urls:
+    - github: https://github.com/AlthausKonstantin/rareeventestimation
+- title: Modelling a traffic light assistant
+  subtitle: Joint project with Continental
+  punchline: Optimally drive a car through traffic lights
+  end: '2021-03-01'
+  industry: Research
+  location: Munich
+  start: '2020-10-01'
+  description:
+    - Collaboration between Technical University of Munich and Continental Automotive
+    - Mathematical modelling of an autopilot
+    - Finding the best trajectory through multiple traffic lights
+    - Solving an optimal control problem
+  tag:
+    - Matlab
+    - LaTeX
+    - Research
+    - Optimization

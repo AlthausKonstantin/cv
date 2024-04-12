@@ -301,8 +301,8 @@
 	{\large\color{emphasis}#1}
 	\ifstrequal{#2}{}{}{\large{\color{accent}#2}}
 	\par\medskip\normalsize
-	\ifstrequal{#3}{}{}{{\small\makebox[0.33\linewidth][l]{\color{accent}\faCalendar\color{emphasis}~#3}}}
-	\ifstrequal{#4}{}{}{{\small\makebox[0.67\linewidth][l]{#4}}}
+	\ifstrequal{#3}{}{}{{\small\makebox[0.3\linewidth][l]{\color{accent}\faCalendar\color{emphasis}~#3}}}
+	\ifstrequal{#4}{}{{\small\makebox[0.6\linewidth][l]{}}}{{\small\makebox[0.67\linewidth][l]{#4}}}\par
 	\medskip\normalsize
 }
 
@@ -329,7 +329,7 @@
 }
 % Fork (before v1.6.5a): Tags now have a more consistent vertican and horizontal separation
 \newcommand{\cvtag}[1]{%
-	\tikz[baseline]\node[anchor=base,draw=body,rounded corners,inner xsep=1ex,inner ysep=0.75ex,text height=1.5ex,text depth=.25ex]{#1};
+	\tikz[baseline]\node[anchor=base,draw=accent,rounded corners,inner xsep=1ex,inner ysep=0.75ex,text height=1.5ex,text depth=.25ex]{\color{accent}#1};
 	\vspace{0.25ex}
 }
 
@@ -402,9 +402,14 @@
 %     \item[\small\normalfont\faLinkedin]\href{https://linkedin.com/in/#2}{#2}
 %   \end{description}
 % }
-
-\newcommand{\cvreference}[2]{
-	\textcolor{accent}{\href{#2}{#1}}
+% \reference{name}{position}{phone}{mail}{url}{description}
+\newcommand{\cvreference}[6]{
+	\color{emphasis}#1\\
+  #2\\
+  \ifstrequal{#3}{}{}{\color{accent}\faPhone\color{emphasis}˜#3\\}
+  \ifstrequal{#4}{}{}{\color{accent}\faAt\color{emphasis}˜#4\\}
+  \ifstrequal{#4}{}{}{\color{accent}\faGlobe\color{emphasis}˜#5\\}
+  #6
 }
 
 

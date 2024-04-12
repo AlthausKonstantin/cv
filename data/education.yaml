@@ -1,0 +1,24 @@
+- title: B. Sc. Mathematics with Minor in Informatics
+  employee: Technical University
+  start: 2014-10-01
+  end: 2019-01-31
+  location: Munich
+  description:
+    - Specialization in numerics and probability theory
+    - Final grade 1.7
+  tag:
+    - Java
+    - Julia
+    - C/C++
+- title: Master Mathematics in Science and Engineering Minor in Medical Technology
+  employee: Technical University
+  start: 2019-03-01
+  end: 2022-10-01
+  location: Munich
+  description:
+    - Specialization in numerics and statistics
+    - Exchange semester at the University of Waterloo, Canada (2021)
+    - Final grade 1.4
+  tag:
+    - Python
+    - Deep Learning

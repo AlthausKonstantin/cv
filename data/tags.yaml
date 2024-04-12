@@ -1,0 +1,92 @@
+- title: CICD
+  type: Strength
+  importance: 1.0
+  subtype: Experience
+- title: Scientific Computing
+  type: Strength
+  importance: 1.0
+  subtype: Experience
+- title: Machine Learning
+  type: Strength
+  importance: 0.7
+  subtype: Experience
+- title: Data Engineering
+  type: Strength
+  importance: 0.65
+  subtype: Experience
+- title: Visualization
+  type: Strength
+  importance: 0.8
+  subtype: Experience
+- title: Statistics
+  type: Strength
+  importance: 0.7
+  subtype: Experience
+- title: Optimization
+  type: Strength
+  importance: 0.8
+  subtype: Experience
+- title: Analytical Thinking
+  type: Strength
+  importance: 1.0
+  subtype: Personal Trait
+- title: Problem Solving
+  type: Strength
+  importance: 1.0
+  subtype: Personal Trait
+- title: Working Independently
+  type: Strength
+  importance: 1.0
+  subtype: Personal Trait
+- title: Team Player
+  type: Strength
+  importance: 0.9
+  subtype: Personal Trait
+- title: Rust
+  type: Learning
+  importance: 0.0
+  subtype: Skill
+- title: dSPACE Tools
+  type: Strength
+  importance: 0.3
+  subtype: Skill
+- title: VECTOR Tools
+  type: Strength
+  importance: 0.4
+  subtype: Skill
+- title: C/C++
+  type: Strength
+  importance: 0.3
+  subtype: Skill
+- title: Julia
+  type: Strength
+  importance: 0.7
+  subtype: Skill
+- title: Matlab
+  type: Strength
+  importance: 0.9
+  subtype: Skill
+- title: Python
+  type: Strength
+  importance: 1.0
+  subtype: Skill
+- title: R
+  type: Strength
+  importance: 1.0
+  subtype: Skill
+- title: Simulink
+  type: Strength
+  importance: 0.5
+  subtype: Skill
+- title: Java
+  type: Strength
+  importance: 0.75
+  subtype: Skill
+- title: Jenkins
+  type: Strength
+  importance: 0.4
+  subtype: Skill
+- title: AUTOSAR
+  type: Strength
+  importance: 0.2
+  subtype: Skill
