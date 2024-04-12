@@ -7,6 +7,7 @@ from re import findall
 from jinja2 import FileSystemLoader, Environment
 import tempfile
 import subprocess
+from constants import SUPPORTED_INFOFIELDS
 from constants import BIBLIOGRAPHY_TEX_FILE, PERSONAL_INFO_TEX_FILE, SECTIONS
 from constants import PERSONAL_INFO_TEMPLATE
 from constants import BIBLIOGRAPHY_TEMPLATE
@@ -147,14 +148,19 @@ def yaml_to_tex(section: str, data_dir: Path, tex_dir: Path) -> Path:
     with open(yaml_file, "r") as f:
         data = pd.json_normalize(safe_load(f))
     data = data.where(pd.notnull(data), None)
-    data[["start", "end"]] = data[["start", "end"]].apply(pd.to_datetime)
-    data = data.applymap(lambda x: clean_string(x) if isinstance(x, str) else x)
-    data = data.sort_values("start", ascending=False)
+    has_durations = "start" in data.columns
+    has_durations &= "end" in data.columns
+    if has_durations:
+        data[["start", "end"]] = data[["start", "end"]].apply(pd.to_datetime)
+        data = data.applymap(
+            lambda x: clean_string(x) if isinstance(x, str) else x
+        )
+        data = data.sort_values("start", ascending=False)
     latex_command = LATEX_COMMANDS[section]
     data["tex_code"] = data.apply(row_to_tex_code,
                                   axis=1,
                                   latex_command=latex_command)
-    tex_output = "\n\\medskip".join(data.tex_code.values)
+    tex_output = "\n\\divider\n".join(data.tex_code.values)
     with open(tex_file, "w") as text_file:
         text_file.write(tex_output)
     print(f"wrote {tex_file}")
@@ -168,8 +174,36 @@ def row_to_tex_code(row, latex_command="cvevent"):
         return make_cvproject(row)
     if latex_command == "cvtag":
         return make_cvtag(row)
+    if latex_command == "cvreference":
+        return make_cvreference(row)
     else:
         return ""
+
+
+def make_cvreference(row) -> str:
+    who = row["name"]
+    where = row.position
+    phone = row.get("phone", "")
+    mail = row.get("mail", "")
+    ref = "\\cvreference"
+    ref += f"{{ {who} }}"
+    ref += f"{{ {where} }}"
+    ref += f"{{ {phone} }}"
+    ref += f"{{ {mail} }}"
+    description = row.get("description", "")
+    social_network = row.get("url.service", None)
+    social_name = row.get("url.username", None)
+    url = row.get("url.link", None)
+
+    if social_network in SUPPORTED_INFOFIELDS:
+        info = f"\\{social_network}{{ {social_name} }}\\\\\n{description}"
+    elif url is not None:
+        stripped_url = sub("https://", "", url)
+        info = f"\\hompage{{ {stripped_url} }}\\\\\n{description}"
+    else:
+        info = description
+    ref += f"{{ {info} }}"
+    return ref
 
 
 def make_cvtag(row):
@@ -206,7 +240,6 @@ def make_cvevent(row):
     cv_event = title + when + where + industry
     what = list_to_tex_list(row.description)
     tags = taglist_to_texcode(row.tag)
-    tags += "\\newline"
     if hasattr(row, "punchline"):
         punchline = clean_string(row.punchline, mandatory_suffix="!")
         punchline = enclose_in_tex_environment(punchline, "quote")

@@ -194,6 +194,7 @@
 \NewInfoField{twitter}{\faTwitter}[https://twitter.com/]
 \NewInfoField{linkedin}{\faLinkedin}[https://linkedin.com/in/]
 \NewInfoField{github}{\faGithub}[https://github.com/]
+\NewInfoField{xing}{\faXing}[https://www.xing.com/profile/]
 % v1.?? Use fontawesome5 for Orcid symbol
 \NewInfoField{orcid}{\faOrcid}[https://orcid.org/]
 \NewInfoField{location}{\faMapMarker}
@@ -402,14 +403,14 @@
 %     \item[\small\normalfont\faLinkedin]\href{https://linkedin.com/in/#2}{#2}
 %   \end{description}
 % }
-% \reference{name}{position}{phone}{mail}{url}{description}
-\newcommand{\cvreference}[6]{
-	\color{emphasis}#1\\
-  #2\\
-  \ifstrequal{#3}{}{}{\color{accent}\faPhone\color{emphasis}˜#3\\}
-  \ifstrequal{#4}{}{}{\color{accent}\faAt\color{emphasis}˜#4\\}
-  \ifstrequal{#4}{}{}{\color{accent}\faGlobe\color{emphasis}˜#5\\}
-  #6
+% \reference{name}{position}{phone}{mail}{description}
+\newcommand{\cvreference}[5]{
+	\textcolor{emphasis}{\textbf{#1}}\\
+	\textcolor{accent}{\textbf{#2}}\\
+	\ifstrequal{#3}{}{}{\phone{#3}\\}
+	\ifstrequal{#4}{}{}{\email{#4}\\}
+	#5\\
+	\medskip\normalsize
 }
 
 
