@@ -64,3 +64,23 @@
     - Shiny
     - GitHub
     - Actuary
+- title: DevOps Engineer
+  punchline: Set up the first AUTOSAR conform Software in the Loop infrastructure
+  employee: Vaillant
+  industry: HVAC Systems
+  location: Remscheid
+  start: 2023-05-14
+  end:
+  description:
+    - Set up SiL infrastructure for ECUs of HVAC systems
+    - Automate and connect multiple toolchains for developing and testing ECUs
+    - Develop Simulink models for RT simulations
+  tag:
+    - CANoe
+    - AutomationDesk
+    - Matlab
+    - Simulink
+    - Python
+    - Polarion
+    - GitHub
+    - Jenkins

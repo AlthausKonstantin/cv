@@ -160,7 +160,7 @@ def yaml_to_tex(section: str, data_dir: Path, tex_dir: Path) -> Path:
     data["tex_code"] = data.apply(row_to_tex_code,
                                   axis=1,
                                   latex_command=latex_command)
-    tex_output = "\n\\divider\n".join(data.tex_code.values)
+    tex_output = "\n\n".join(data.tex_code.values)
     with open(tex_file, "w") as text_file:
         text_file.write(tex_output)
     print(f"wrote {tex_file}")
@@ -191,18 +191,24 @@ def make_cvreference(row) -> str:
     ref += f"{{ {phone} }}"
     ref += f"{{ {mail} }}"
     description = row.get("description", "")
+    description = f"\\textcolor{{accent}}{{{description}}}"
     social_network = row.get("url.service", None)
     social_name = row.get("url.username", None)
     url = row.get("url.link", None)
 
     if social_network in SUPPORTED_INFOFIELDS:
-        info = f"\\{social_network}{{ {social_name} }}\\\\\n{description}"
+        # cave, this f string is whitespace sensitive
+        info = f"\\{social_network}{{{social_name}}}\\\\"
+        info = "\n".join([info, description])
     elif url is not None:
+        # cave, this f string is whitespace sensitive
         stripped_url = sub("https://", "", url)
-        info = f"\\hompage{{ {stripped_url} }}\\\\\n{description}"
+        info = f"\\hompage{{{stripped_url}}}\\\\"
+        info = "\n".join([info, description])
     else:
         info = description
     ref += f"{{ {info} }}"
+    ref = put_in_pagebreakfree_section(ref)
     return ref
 
 
@@ -227,7 +233,7 @@ def make_cvproject(row):
     punchline = clean_string(row.punchline, mandatory_suffix="!")
     punchline = enclose_in_tex_environment(punchline, "quote")
     cv_project = "\n".join([cv_project, punchline, what, tags])
-    return cv_project
+    return put_in_pagebreakfree_section(cv_project)
 
 
 def make_cvevent(row):
@@ -246,7 +252,7 @@ def make_cvevent(row):
         cv_event = "\n".join([cv_event, punchline, what, tags])
     else:
         cv_event = "\n".join([cv_event, what, tags])
-    return cv_event
+    return put_in_pagebreakfree_section(cv_event)
 
 
 def clean_string(string: str, mandatory_suffix=None) -> str:
@@ -296,7 +302,7 @@ def linkdict_to_texcode(data: dict) -> str:
     return tex_list
 
 
-def put_in_pagebreakfree_section(tex_code):
+def put_in_pagebreakfree_section(tex_code: str) -> str:
     output = '\\begin{breakfreeunit}\n'
     output += tex_code
     output += '\n\\end{breakfreeunit}'

@@ -1,6 +1,5 @@
 %%%%%%%%%%%%%%%%%
 % This is an sample CV template created using altacv.cls
-% (v1.3, 10 May 2020) written by LianTze Lim (liantze@gmail.com). Now compiles with pdfLaTeX, XeLaTeX and LuaLaTeX.
 % This fork/modified version has been made by Nicolás Omar González Passerino (nicolas.passerino@gmail.com, 15 Oct 2020)
 %
 %% It may be distributed and/or modified under the
@@ -34,6 +33,7 @@
 %% and packages.
 %% See http://texdoc.net/pkg/fontawesome5 and http://texdoc.net/pkg/academicons for full list of symbols. You MUST compile with XeLaTeX or LuaLaTeX if you want to use academicons.
 \usepackage{fontspec}
+\usepackage{varwidth}
 \usepackage{fontawesome5}
 \usepackage{biblatex}
 % Change the page layout if you need to
@@ -120,6 +120,7 @@
 		% ----- LANGUAGES -----
 
 		% ----- REFERENCES -----
+		\pagebreak
 		\cvsection{References}
 		\input{references.tex}
 
@@ -167,17 +168,17 @@
 		\input{experience.tex}
 		% ----- EXPERIENCE -----
 
+		% ----- PROJECTS -----
+		\cvsection{Projects}
+		\input{projects.tex}
+		% ----- PROJECTS -----
+
 		% ----- EDUCATION -----
 		\begin{breakfreeunit}
 			\cvsection{Education}
 			\input{education.tex}
 		\end{breakfreeunit}
 		% ----- EDUCATION -----
-
-		% ----- PROJECTS -----
-		\cvsection{Projects}
-		\input{projects.tex}
-		% ----- PROJECTS -----
 
 		% ----- PUBLICATIONS -----
 		\begin{breakfreeunit}
