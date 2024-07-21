@@ -1,34 +1,23 @@
-from typing import Callable
-from constants import SOPS_PRIVATE_KEY_ENV
-from os import environ
-from re import compile
-import pandas as pd
-from re import sub
-from yaml import safe_load
-import vobject
-from pyshorteners import Shortener
-from re import findall
-from jinja2 import FileSystemLoader, Environment
-import tempfile
 import subprocess
-from constants import SUPPORTED_INFOFIELDS
-from constants import SOPS_ENCRYPTION_FLAG
-from constants import BIBLIOGRAPHY_TEX_FILE, PERSONAL_INFO_TEX_FILE, SECTIONS
-from constants import PERSONAL_INFO_TEMPLATE
-from constants import BIBLIOGRAPHY_TEMPLATE
-from constants import TAGS_FILE
-from constants import TAGS_TEX_FILE
-from constants import TAGS_TYPES
-from constants import TAGS_SUBTYPES
-from constants import BIBLIOGRAPHY
-from constants import VCARD
-from constants import PHOTO
-from constants import DATA_DIR
-from constants import TEX_DIR
-from constants import PROJECT_DIR
-from constants import MAIN_TEX_FILE
-from constants import LATEX_COMMANDS
+import tempfile
+from os import environ
 from pathlib import Path
+from re import compile, findall, sub
+from typing import Callable
+
+import pandas as pd
+import vobject
+from jinja2 import Environment, FileSystemLoader
+from pyshorteners import Shortener
+from yaml import safe_load
+
+from constants import (BIBLIOGRAPHY, BIBLIOGRAPHY_TEMPLATE,
+                       BIBLIOGRAPHY_TEX_FILE, DATA_DIR, LATEX_COMMANDS,
+                       MAIN_TEX_FILE, PERSONAL_INFO_TEMPLATE,
+                       PERSONAL_INFO_TEX_FILE, PHOTO, PROJECT_DIR, SECTIONS,
+                       SOPS_ENCRYPTION_FLAG, SOPS_PRIVATE_KEY_ENV,
+                       SUPPORTED_INFOFIELDS, TAGS_FILE, TAGS_SUBTYPES,
+                       TAGS_TEX_FILE, TAGS_TYPES, TEX_DIR, VCARD)
 
 
 def compile_main():
@@ -81,20 +70,25 @@ def make_source_files():
 
 def read_yaml(path: Path, idx_data_col_name="title") -> pd.DataFrame:
     """
-        Read yaml file
-        check if file is encrypted
-        if encryptd, try to decrypt with sops
-        sops uses age backend
-        if encryption fails, replace encrypted values with place holders
-        return data
+    Read yaml file
+    check if file is encrypted
+    if encryptd, try to decrypt with sops
+    sops uses age backend
+    if encryption fails, replace encrypted values with place holders
+    return data
     """
     data_dict = read_encrypted_yaml(path)
     # check if data is encrypted
     if SOPS_ENCRYPTION_FLAG in data_dict:
         enc_keys_pattern = data_dict[SOPS_ENCRYPTION_FLAG]["encrypted_regex"]
         enc_keys_regex = compile(enc_keys_pattern)
-        def enc_filter(x): return bool(enc_keys_regex.match(x))
-        def encrypted_output(x): return 4 * "\\bullet"
+
+        def enc_filter(x):
+            return bool(enc_keys_regex.match(x))
+
+        def encrypted_output(x):
+            return 4 * "\\bullet"
+
         del data_dict[SOPS_ENCRYPTION_FLAG]
         data_dict = traverse_nested_dict(data_dict, enc_filter, encrypted_output)
     # return data as pandas dataframe
@@ -122,8 +116,10 @@ def read_encrypted_yaml(path: Path) -> dict:
             return safe_load(f)
 
 
-def traverse_nested_dict(data: dict, filter: Callable, operation: Callable, output=None) -> dict:
-    """Go recursively through nested dict and apply operation to values whose keys match filter"""""
+def traverse_nested_dict(
+    data: dict, filter: Callable, operation: Callable, output=None
+) -> dict:
+    """Go recursively through nested dict and apply operation to values whose keys match filter""" ""
     if output is None:
         output = {}
     for key, value in data.items():
@@ -152,10 +148,12 @@ def make_tags_tex(tags_file: Path, tex_file: Path, tag_types: list, tag_subtypes
             if tag_subtype not in group.groups:
                 continue
             subgroup = group.get_group(tag_subtype)
-            subgroup["tex_code"] = subgroup.apply(row_to_tex_code,
-                                                  axis=1,
-                                                  latex_command="cvtag",
-                                                  options={"color": "accent"})
+            subgroup["tex_code"] = subgroup.apply(
+                row_to_tex_code,
+                axis=1,
+                latex_command="cvtag",
+                options={"color": "accent"},
+            )
             subgroup = subgroup.sort_values(by="importance", ascending=False)
             subgroup_content = "\n".join(subgroup.tex_code.values)
             subgroup_content_list.append(subgroup_content)
@@ -163,7 +161,9 @@ def make_tags_tex(tags_file: Path, tex_file: Path, tag_types: list, tag_subtypes
         if not tex_output:
             tex_output = "\n".join([section_title, section_content])
         else:
-            tex_output = "\n".join([tex_output, "\\medskip\n\n", section_title, section_content])
+            tex_output = "\n".join(
+                [tex_output, "\\medskip\n\n", section_title, section_content]
+            )
     with open(tex_file, "w") as f:
         f.write(tex_output)
 
@@ -191,15 +191,17 @@ def parser_personal_info(path_to_vcard: Path, path_to_photo: Path) -> dict:
         "location": f"{vcard.adr.value.city}, {vcard.adr.value.country}",
         "github": github,
         "linkedin": linkedin,
-        "photo": path_to_photo.with_suffix('')
+        "photo": path_to_photo.with_suffix(""),
     }
     return personal_info
 
 
 def fill_template(template: Path, data: dict, output: Path):
-    env = Environment(loader=FileSystemLoader(template.parent),
-                      variable_start_string="[[",
-                      variable_end_string="]]")
+    env = Environment(
+        loader=FileSystemLoader(template.parent),
+        variable_start_string="[[",
+        variable_end_string="]]",
+    )
     temp = env.get_template(template.name)
     output.write_text(temp.render(data))
 
@@ -213,14 +215,10 @@ def yaml_to_tex(section: str, data_dir: Path, tex_dir: Path) -> Path:
     has_durations &= "end" in data.columns
     if has_durations:
         data[["start", "end"]] = data[["start", "end"]].apply(pd.to_datetime)
-        data = data.applymap(
-            lambda x: clean_string(x) if isinstance(x, str) else x
-        )
+        data = data.applymap(lambda x: clean_string(x) if isinstance(x, str) else x)
         data = data.sort_values("start", ascending=False)
     latex_command = LATEX_COMMANDS[section]
-    data["tex_code"] = data.apply(row_to_tex_code,
-                                  axis=1,
-                                  latex_command=latex_command)
+    data["tex_code"] = data.apply(row_to_tex_code, axis=1, latex_command=latex_command)
     tex_output = "\n\\bigskip".join(data.tex_code.values)
     with open(tex_file, "w") as text_file:
         text_file.write(tex_output)
@@ -371,19 +369,19 @@ def linkdict_to_texcode(data: dict) -> str:
 
 
 def put_in_pagebreakfree_section(tex_code: str) -> str:
-    output = '\\begin{breakfreeunit}\n'
+    output = "\\begin{breakfreeunit}\n"
     output += tex_code
-    output += '\n\\end{breakfreeunit}'
+    output += "\n\\end{breakfreeunit}"
     return output
 
 
 def enclose_in_tex_environment(tex_code, environment, kwarg=None):
     if kwarg:
-        output = f'\\begin{{{environment}}}{{{kwarg}}}\n'
+        output = f"\\begin{{{environment}}}{{{kwarg}}}\n"
     else:
-        output = f'\\begin{{{environment}}}\n'
+        output = f"\\begin{{{environment}}}\n"
     output += tex_code
-    output += f'\n\\end{{{environment}}}'
+    output += f"\n\\end{{{environment}}}"
     return output
 
 
@@ -400,7 +398,7 @@ def check_for_duplicate_icons(tex_code):
 
 
 def shorten_url(url):
-    is_github_url = 'github.com' in url
+    is_github_url = "github.com" in url
     try:
         shortener = Shortener()
         if is_github_url:

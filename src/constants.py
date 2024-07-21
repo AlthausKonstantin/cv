@@ -1,5 +1,5 @@
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = PROJECT_DIR / "data"
@@ -9,7 +9,7 @@ SECTIONS = ["experience", "education", "projects", "references"]
 TAGS_TEX_FILE = TEX_DIR / "tags.tex"
 PERSONAL_INFO_TEX_FILE = TEX_DIR / "personal_info.tex"
 BIBLIOGRAPHY_TEX_FILE = TEX_DIR / "bibliography.tex"
-VCARD = DATA_DIR / 'KonstantinAlthaus.vcf'
+VCARD = DATA_DIR / "KonstantinAlthaus.vcf"
 TAGS_FILE = DATA_DIR / "tags.yaml"
 TAGS_SUBTYPES = ["Personal Trait", "Experience", "Skill"]
 TAGS_TYPES = ["Strength", "Learning"]
@@ -23,7 +23,7 @@ LATEX_COMMANDS = {
     "projects": "cvproject",
     "experience": "cvevent",
     "education": "cvevent",
-    "references": "cvreference"
+    "references": "cvreference",
 }
 file_name = f"CV Althaus {datetime.now().strftime('%Y-%m')}"
 OUTPUT_PATH = PROJECT_DIR / f"{file_name}.pdf"
