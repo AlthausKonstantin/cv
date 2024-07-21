@@ -1,3 +1,7 @@
+from typing import Callable
+from constants import SOPS_PRIVATE_KEY_ENV
+from os import environ
+from re import compile
 import pandas as pd
 from re import sub
 from yaml import safe_load
@@ -8,6 +12,7 @@ from jinja2 import FileSystemLoader, Environment
 import tempfile
 import subprocess
 from constants import SUPPORTED_INFOFIELDS
+from constants import SOPS_ENCRYPTION_FLAG
 from constants import BIBLIOGRAPHY_TEX_FILE, PERSONAL_INFO_TEX_FILE, SECTIONS
 from constants import PERSONAL_INFO_TEMPLATE
 from constants import BIBLIOGRAPHY_TEMPLATE
@@ -74,10 +79,66 @@ def make_source_files():
         yaml_to_tex(sec, DATA_DIR, TEX_DIR)
 
 
+def read_yaml(path: Path, idx_data_col_name="title") -> pd.DataFrame:
+    """
+        Read yaml file
+        check if file is encrypted
+        if encryptd, try to decrypt with sops
+        sops uses age backend
+        if encryption fails, replace encrypted values with place holders
+        return data
+    """
+    data_dict = read_encrypted_yaml(path)
+    # check if data is encrypted
+    if SOPS_ENCRYPTION_FLAG in data_dict:
+        enc_keys_pattern = data_dict[SOPS_ENCRYPTION_FLAG]["encrypted_regex"]
+        enc_keys_regex = compile(enc_keys_pattern)
+        def enc_filter(x): return bool(enc_keys_regex.match(x))
+        def encrypted_output(x): return 4 * "\\bullet"
+        del data_dict[SOPS_ENCRYPTION_FLAG]
+        data_dict = traverse_nested_dict(data_dict, enc_filter, encrypted_output)
+    # return data as pandas dataframe
+    data_list = [d | {idx_data_col_name: k} for k, d in data_dict.items()]
+    data = pd.DataFrame(data_list)
+    return data
+
+
+def read_encrypted_yaml(path: Path) -> dict:
+    """Load yaml file and decrypt it with sops. If encryption fails, load and return original file"""
+    # check if private key is available
+    if SOPS_PRIVATE_KEY_ENV not in environ:
+        with open(path, "r") as f:
+            return safe_load(f)
+    # decrypt file
+    try:
+        decrypted = subprocess.run(
+            ["sops", "--decrypt", path],
+            capture_output=True,
+            check=True,
+        )
+        return safe_load(decrypted.stdout)
+    except subprocess.CalledProcessError:
+        with open(path, "r") as f:
+            return safe_load(f)
+
+
+def traverse_nested_dict(data: dict, filter: Callable, operation: Callable, output=None) -> dict:
+    """Go recursively through nested dict and apply operation to values whose keys match filter"""""
+    if output is None:
+        output = {}
+    for key, value in data.items():
+        if filter(key):
+            output[key] = operation(value)
+        elif isinstance(value, dict):
+            output[key] = traverse_nested_dict(value, filter, operation)
+        else:
+            output[key] = value
+    return output
+
+
 def make_tags_tex(tags_file: Path, tex_file: Path, tag_types: list, tag_subtypes: list):
     # read in yaml file
-    with open(tags_file, "r") as f:
-        tags = pd.json_normalize(safe_load(f))
+    tags = read_yaml(tags_file)
     tags_by_type = tags.groupby(by="type")
     tex_output = ""
     for tag_type in tag_types:
@@ -93,7 +154,8 @@ def make_tags_tex(tags_file: Path, tex_file: Path, tag_types: list, tag_subtypes
             subgroup = group.get_group(tag_subtype)
             subgroup["tex_code"] = subgroup.apply(row_to_tex_code,
                                                   axis=1,
-                                                  latex_command="cvtag")
+                                                  latex_command="cvtag",
+                                                  options={"color": "accent"})
             subgroup = subgroup.sort_values(by="importance", ascending=False)
             subgroup_content = "\n".join(subgroup.tex_code.values)
             subgroup_content_list.append(subgroup_content)
@@ -145,8 +207,7 @@ def fill_template(template: Path, data: dict, output: Path):
 def yaml_to_tex(section: str, data_dir: Path, tex_dir: Path) -> Path:
     yaml_file = data_dir / f"{section}.yaml"
     tex_file = tex_dir / f"{section}.tex"
-    with open(yaml_file, "r") as f:
-        data = pd.json_normalize(safe_load(f))
+    data = read_yaml(yaml_file)
     data = data.where(pd.notnull(data), None)
     has_durations = "start" in data.columns
     has_durations &= "end" in data.columns
@@ -160,28 +221,28 @@ def yaml_to_tex(section: str, data_dir: Path, tex_dir: Path) -> Path:
     data["tex_code"] = data.apply(row_to_tex_code,
                                   axis=1,
                                   latex_command=latex_command)
-    tex_output = "\n\n".join(data.tex_code.values)
+    tex_output = "\n\\bigskip".join(data.tex_code.values)
     with open(tex_file, "w") as text_file:
         text_file.write(tex_output)
     print(f"wrote {tex_file}")
     return tex_file
 
 
-def row_to_tex_code(row, latex_command="cvevent"):
+def row_to_tex_code(row, latex_command="cvevent", options=None):
     if latex_command == "cvevent":
-        return make_cvevent(row)
+        return make_cvevent(row, options=options)
     if latex_command == "cvproject":
-        return make_cvproject(row)
+        return make_cvproject(row, options=options)
     if latex_command == "cvtag":
-        return make_cvtag(row)
+        return make_cvtag(row, options=options)
     if latex_command == "cvreference":
-        return make_cvreference(row)
+        return make_cvreference(row, options=options)
     else:
         return ""
 
 
-def make_cvreference(row) -> str:
-    who = row["name"]
+def make_cvreference(row, options=None) -> str:
+    who = row["title"]
     where = row.position
     phone = row.get("phone", "")
     mail = row.get("mail", "")
@@ -212,12 +273,18 @@ def make_cvreference(row) -> str:
     return ref
 
 
-def make_cvtag(row):
-    tag = f"\\cvtag{{ {row.title} }}"
+def make_cvtag(row, options=None):
+    if options is None:
+        tag = f"\\cvtag{{ {row.title} }}"
+    else:
+        if "color" in options.keys():
+            tag = f"\\cvtagaccent{{ {row.title} }}"
+        else:
+            tag = f"\\cvtag{{ {row.title} }}"
     return tag
 
 
-def make_cvproject(row):
+def make_cvproject(row, options=None):
     title = f"\\cvproject{{ {row.title} }}{{| {row.subtitle} }}"
     when = format_time_period(row.start, row.end)
     if row.urls:
@@ -236,7 +303,7 @@ def make_cvproject(row):
     return put_in_pagebreakfree_section(cv_project)
 
 
-def make_cvevent(row):
+def make_cvevent(row, options=None):
     title = f"\\cvevent{{ {row.title} }}{{| {row.employee} }}"
     when = format_time_period(row.start, row.end)
     location = getattr(row, "location", "")
@@ -288,6 +355,7 @@ def taglist_to_texcode(data: list) -> str:
     tex_list = ""
     for item in data:
         tex_list += f"\\cvtag{{ {item} }}"
+    tex_list = enclose_in_tex_environment(tex_list, "spacing", kwarg="0.5")
     return tex_list
 
 
@@ -309,8 +377,11 @@ def put_in_pagebreakfree_section(tex_code: str) -> str:
     return output
 
 
-def enclose_in_tex_environment(tex_code, environment):
-    output = f'\\begin{{{environment}}}\n'
+def enclose_in_tex_environment(tex_code, environment, kwarg=None):
+    if kwarg:
+        output = f'\\begin{{{environment}}}{{{kwarg}}}\n'
+    else:
+        output = f'\\begin{{{environment}}}\n'
     output += tex_code
     output += f'\n\\end{{{environment}}}'
     return output

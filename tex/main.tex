@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%
 % This is an sample CV template created using altacv.cls
 % This fork/modified version has been made by Nicolás Omar González Passerino (nicolas.passerino@gmail.com, 15 Oct 2020)
-%
+% Based on above version this fork/modified version has been made by Konstantin Althaus (althaus.konstantin.95@gmail.com, 06/2024)
 %% It may be distributed and/or modified under the
 %% conditions of the LaTeX Project Public License, either version 1.3
 %% of this license or (at your option) any later version.
@@ -11,69 +11,39 @@
 %% version 2003/12/01 or later.
 %%%%%%%%%%%%%%%%
 
-%% If you need to pass whatever options to xcolor
 \PassOptionsToPackage{dvipsnames}{xcolor}
-
-%% If you are using \orcid or academicons
-%% icons, make sure you have the academicons
-%% option here, and compile with XeLaTeX
-%% or LuaLaTeX.
-% \documentclass[10pt,a4paper,academicons]{altacv}
-
-%% Use the "normalphoto" option if you want a normal photo instead of cropped to a circle
-% \documentclass[10pt,a4paper,normalphoto]{altacv}
-
-%% Fork (before v1.6.5a): CV dark mode toggle enabler to use a inverted color palette.
-%% Use the "darkmode" option if you want a color palette used to 
-% \documentclass[10pt,a4paper,ragged2e,withhyper,darkmode]{altacv}
-
 \documentclass[10pt,a4paper,ragged2e,withhyper]{altacv}
 
 %% AltaCV uses the fontawesome5 and academicons fonts
 %% and packages.
 %% See http://texdoc.net/pkg/fontawesome5 and http://texdoc.net/pkg/academicons for full list of symbols. You MUST compile with XeLaTeX or LuaLaTeX if you want to use academicons.
 \usepackage{fontspec}
+\usepackage{datetime}
+\usepackage{fancyhdr}
 \usepackage{varwidth}
 \usepackage{fontawesome5}
 \usepackage{biblatex}
-% Change the page layout if you need to
-\geometry{left=1.2cm,right=1.2cm,top=1cm,bottom=1cm,columnsep=0.75cm}
+\usepackage{setspace}
+\geometry{left=1.25cm,right=1.25cm,top=1cm,bottom=1cm,headheight=17pt,includefoot,heightrounded,columnsep=1.2cm}
+\usepackage{fancyhdr}
+\fancyhf{}
+\renewcommand{\headrule}{}
+\AtBeginDocument{\pagestyle{fancy}}
 
 % The paracol package lets you typeset columns of text in parallel
 \usepackage{paracol}
 
-% Change the font if you want to, depending on whether
-% you're using pdflatex or xelatex/lualatex
-\ifxetexorluatex
-	% If using xelatex or lualatex:
-	\setmainfont{Roboto Slab}
-	\setsansfont{Lato}
-	\renewcommand{\familydefault}{\sfdefault}
-\else
-	% If using pdflatex:
-	\usepackage[rm]{roboto}
-	\usepackage[defaultsans]{lato}
-	% \usepackage{sourcesanspro}
-	\renewcommand{\familydefault}{\sfdefault}
-\fi
+% If using xelatex or lualatex:
+\setmainfont{Roboto Slab}
+\setsansfont{Lato}
+\renewcommand{\familydefault}{\sfdefault}
 
-% Fork (before v1.6.5a): Change the color codes to test your personal variant on any mode
-% \ifdarkmode%
 \definecolor{PrimaryColor}{HTML}{836856}
 \definecolor{SecondaryColor}{HTML}{545454}
 \definecolor{ThirdColor}{HTML}{737373}
 \definecolor{BodyColor}{HTML}{ABABAB}
 \definecolor{EmphasisColor}{HTML}{836856}
 \definecolor{BackgroundColor}{HTML}{F5F3F2}
-% \else%
-%   \definecolor{PrimaryColor}{HTML}{001F5A}
-%   \definecolor{SecondaryColor}{HTML}{0039AC}
-%   \definecolor{ThirdColor}{HTML}{F3890B}
-%   \definecolor{BodyColor}{HTML}{666666}
-%   \definecolor{EmphasisColor}{HTML}{2E2E2E}
-%   \definecolor{BackgroundColor}{HTML}{E2E2E2}
-% \fi%
-
 \colorlet{name}{PrimaryColor}
 \colorlet{tagline}{SecondaryColor}
 \colorlet{heading}{PrimaryColor}
@@ -98,6 +68,9 @@
 
 
 \begin{document}
+\renewcommand{\today}{\ifcase \month \or 01\or 02\or 03\or 04\or 05 \or 06\or 07\or 08\or 09\or 10\or 11\or 12\fi/\number\year}
+\fancyfoot[R]{\footnotesize Konstantin Althaus, \today}
+\fancyfoot[L]{\footnotesize Do not distribute without permission.}
 \input{personal_info.tex}
 \makecvheader
 \color{body}
@@ -134,22 +107,6 @@
 		% \divider
 		% \cvachievement{\faHeartbeat}{Another achievement}{more details about it of course}
 		% ----- MOST PROUD -----
-
-		% \cvsection{A Day of My Life}
-
-		% Adapted from @Jake's answer from http://tex.stackexchange.com/a/82729/226
-		% \wheelchart{outer radius}{inner radius}{
-		% comma-separated list of value/text width/color/detail}
-		% \wheelchart{1.5cm}{0.5cm}{%
-		%   6/8em/accent!30/{Sleep,\\beautiful sleep},
-		%   3/8em/accent!40/Hopeful novelist by night,
-		%   8/8em/accent!60/Daytime job,
-		%   2/10em/accent/Sports and relaxation,
-		%   5/6em/accent!20/Spending time with family
-		% }
-
-		% use ONLY \newpage if you want to force a page break for
-		% ONLY the current column
 		\newpage
 
 		%% Switch to the right column. This will now automatically move to the second
@@ -159,7 +116,7 @@
 		% ----- ABOUT ME -----
 		\cvsection{About Me}
 		\begin{quote}
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+			I am a dedicated software engineer with a passion for creating innovative solutions. With a strong background in mathematics and expertise in algorithms, I bring a positive attitude and strong work ethic to every team. Eager to learn new technologies and continually enhance my skills, I thrive in collaborative environments.
 		\end{quote}
 		% ----- ABOUT ME -----
 

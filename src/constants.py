@@ -1,4 +1,5 @@
 from pathlib import Path
+from datetime import datetime
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = PROJECT_DIR / "data"
@@ -24,3 +25,7 @@ LATEX_COMMANDS = {
     "education": "cvevent",
     "references": "cvreference"
 }
+file_name = f"CV Althaus {datetime.now().strftime('%Y-%m')}"
+OUTPUT_PATH = PROJECT_DIR / f"{file_name}.pdf"
+SOPS_ENCRYPTION_FLAG = "sops"
+SOPS_PRIVATE_KEY_ENV = "SOPS_AGE_KEY"

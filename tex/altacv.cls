@@ -1,6 +1,6 @@
 %%%%%%%%%%%%%%%%%
 % This is altacv.cls (v1.6.5, 3 Nov 2022) written by
-% LianTze Lim (liantze@gmail.com).
+% LianTze Lim (liantze@gmail.com).alta
 % This is also a fork (v1.6.5a, 29 Jan 2023) written by
 % Nicolás Omar González Passerino (nicolas.passerino@gmail.com)
 %% It may be distributed and/or modified under the
@@ -290,7 +290,7 @@
 % Fork (before v1.6.5a): Structure modified to include change title, company name, start/end dates and work location (only a string)
 \newcommand{\cvevent}[5]{%
 	{\large\color{emphasis}#1}
-	\ifstrequal{#2}{}{}{\large{\color{accent}#2}}
+	\ifstrequal{#2}{}{}{\large{\color{emphasis}#2}}
 	\par\medskip\normalsize
 	\ifstrequal{#3}{}{}{{\small\makebox[0.3\linewidth][l]{\color{accent}\faCalendar\color{emphasis}~#3}}}
 	\ifstrequal{#4}{}{}{{\small\makebox[0.3\linewidth][l]{\color{accent}\faMapMarker\color{emphasis}~#4}}}
@@ -330,8 +330,12 @@
 }\EndAccSupp{}\par%
 }
 % Fork (before v1.6.5a): Tags now have a more consistent vertican and horizontal separation
-\newcommand{\cvtag}[1]{%
+\newcommand{\cvtagaccent}[1]{%
 	\tikz[baseline]\node[anchor=base,draw=accent,rounded corners,inner xsep=1ex,inner ysep=0.75ex,text height=1.5ex,text depth=.25ex]{\color{accent}#1};
+	\vspace{0.25ex}
+}
+\newcommand{\cvtag}[1]{%
+	\tikz[baseline]\node[anchor=base,draw=accent,rounded corners,inner xsep=1ex,inner ysep=0.75ex,text height=1.5ex,text depth=.25ex]{#1};
 	\vspace{0.25ex}
 }
 
