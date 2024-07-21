@@ -1,4 +1,4 @@
-- title: Intern Research and Development
+Intern Research and Development:
   punchline: Make coupled FE-models amenable to vibro-acoustic analysis
   start: 2018-04-01
   end: 2018-08-01
@@ -13,7 +13,7 @@
     - Matlab
     - LaTeX
     - Research
-- title: Working student software development
+Working student software development:
   punchline: Optimize lay-up technology for complex composites
   employee: Cevotec
   end: 2019-07-01
@@ -21,16 +21,17 @@
   industry: Robotics
   location: Munich
   description:
-    - Implementation and parallelisation of optimisation algorithms in C++
-    - Development of new optimisation methods for fibre patch placement
+    - Implementation and parallelization of optimisation algorithms in C++
+    - Development of new optimization methods for fiber patch placement
     - Development of unit and integration tests
   tag:
     - C++
     - Jira
     - Bitbucket
     - Julia
-    - Algorithms
-- title: Working Student financial risk analysis
+    - Genetic Algorithms
+    - optimization
+Working Student financial risk analysis:
   punchline: Show asset managers what the real risks in their portfolio are
   employee: MEAG
   industry: Asset Management
@@ -38,9 +39,8 @@
   start: 2021-12-01
   end: 2022-07-01
   description:
-    - Automatic parsing and compiling of risk data pertaining to financial assets
-      in R
-    - Automatic visualisation of risk metrics in PowerBi, PowerPoint and interactive
+    - Automatic parsing and compiling of risk data of financial assets in R
+    - Automatic visualization of risk metrics in PowerBi, PowerPoint, and interactive
       HTML reports in R
     - Creating custom R packages including unit testing and documentation
   tag:
@@ -48,7 +48,7 @@
     - Tidyverse
     - Azure DevOps
     - PowerBi
-- title: Junior actuary for private health insurance
+Junior actuary for private health insurance:
   punchline: Automate actuarial computations in web dashboards
   employee: ERGO
   industry: Health Insurance
@@ -64,7 +64,7 @@
     - Shiny
     - GitHub
     - Actuary
-- title: DevOps Engineer
+DevOps Engineer:
   punchline: Set up the first AUTOSAR conform Software in the Loop infrastructure
   employee: Vaillant
   industry: HVAC Systems
@@ -74,7 +74,8 @@
   description:
     - Set up SiL infrastructure for ECUs of HVAC systems
     - Automate and connect multiple toolchains for developing and testing ECUs
-    - Develop Simulink models for RT simulations
+    - Develop Simulink models for faster than RT simulations
+    - Write CICD pipelines and custom executables
   tag:
     - CANoe
     - AutomationDesk

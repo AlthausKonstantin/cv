@@ -1,92 +1,92 @@
-- title: CICD
+CICD:
   type: Strength
   importance: 1.0
   subtype: Experience
-- title: Scientific Computing
+Scientific Computing:
   type: Strength
   importance: 1.0
   subtype: Experience
-- title: Machine Learning
+Machine Learning:
   type: Strength
   importance: 0.7
   subtype: Experience
-- title: Data Engineering
+Data Engineering:
   type: Strength
   importance: 0.65
   subtype: Experience
-- title: Visualization
+Visualization:
   type: Strength
   importance: 0.8
   subtype: Experience
-- title: Statistics
+Statistics:
   type: Strength
   importance: 0.7
   subtype: Experience
-- title: Optimization
+Optimization:
   type: Strength
   importance: 0.8
   subtype: Experience
-- title: Analytical Thinking
+Analytical Thinking:
   type: Strength
   importance: 1.0
   subtype: Personal Trait
-- title: Problem Solving
+Problem Solving:
   type: Strength
   importance: 1.0
   subtype: Personal Trait
-- title: Working Independently
+Working Independently:
   type: Strength
   importance: 1.0
   subtype: Personal Trait
-- title: Team Player
+Team Player:
   type: Strength
   importance: 0.9
   subtype: Personal Trait
-- title: Rust
+Rust:
   type: Learning
   importance: 0.0
   subtype: Skill
-- title: dSPACE Tools
+dSPACE Tools:
   type: Strength
   importance: 0.3
   subtype: Skill
-- title: VECTOR Tools
+VECTOR Tools:
   type: Strength
   importance: 0.4
   subtype: Skill
-- title: C/C++
+C/C++:
   type: Strength
   importance: 0.3
   subtype: Skill
-- title: Julia
+Julia:
   type: Strength
   importance: 0.7
   subtype: Skill
-- title: Matlab
+Matlab:
   type: Strength
   importance: 0.9
   subtype: Skill
-- title: Python
+Python:
   type: Strength
   importance: 1.0
   subtype: Skill
-- title: R
+R:
   type: Strength
   importance: 1.0
   subtype: Skill
-- title: Simulink
+Simulink:
   type: Strength
   importance: 0.5
   subtype: Skill
-- title: Java
+Java:
   type: Strength
   importance: 0.75
   subtype: Skill
-- title: Jenkins
+Jenkins:
   type: Strength
   importance: 0.4
   subtype: Skill
-- title: AUTOSAR
+AUTOSAR:
   type: Strength
   importance: 0.2
   subtype: Skill
