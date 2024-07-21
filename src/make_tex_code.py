@@ -20,7 +20,8 @@ from constants import (BIBLIOGRAPHY, BIBLIOGRAPHY_TEMPLATE,
                        TAGS_TEX_FILE, TAGS_TYPES, TEX_DIR, VCARD)
 
 
-def compile_main():
+def compile_main() -> None:
+    """Compile main.tex with lualatex and biber to get references right."""
     with tempfile.TemporaryDirectory() as dir:
         for i in range(2):
             # complie twice to get the references right
@@ -47,7 +48,7 @@ def compile_main():
         output.rename(PROJECT_DIR / "cv.pdf")
 
 
-def make_source_files():
+def make_source_files() -> None:
     # make personal information
     personal_info = parser_personal_info(VCARD, PHOTO)
     fill_template(
@@ -70,17 +71,15 @@ def make_source_files():
 
 def read_yaml(path: Path, idx_data_col_name="title") -> pd.DataFrame:
     """
-    Read yaml file
-    check if file is encrypted
-    if encryptd, try to decrypt with sops
-    sops uses age backend
-    if encryption fails, replace encrypted values with place holders
-    return data
+    Read yaml file and return it as pandas dataframe.
+
+    If data is encrypted, return it as string with 4 bullets.
     """
     data_dict = read_encrypted_yaml(path)
-    # check if data is encrypted
     if SOPS_ENCRYPTION_FLAG in data_dict:
-        enc_keys_pattern = data_dict[SOPS_ENCRYPTION_FLAG]["encrypted_regex"]
+        # format encrypted strings
+        encryption_info = data_dict[SOPS_ENCRYPTION_FLAG]
+        enc_keys_pattern = encryption_info.get("encrypted_regex", "*")
         enc_keys_regex = compile(enc_keys_pattern)
 
         def enc_filter(x):
@@ -91,14 +90,19 @@ def read_yaml(path: Path, idx_data_col_name="title") -> pd.DataFrame:
 
         del data_dict[SOPS_ENCRYPTION_FLAG]
         data_dict = traverse_nested_dict(data_dict, enc_filter, encrypted_output)
-    # return data as pandas dataframe
+    # add highest level keys to dicts
     data_list = [d | {idx_data_col_name: k} for k, d in data_dict.items()]
+    # return data as pandas dataframe
     data = pd.DataFrame(data_list)
     return data
 
 
 def read_encrypted_yaml(path: Path) -> dict:
-    """Load yaml file and decrypt it with sops. If encryption fails, load and return original file"""
+    """
+    Load yaml file and decrypt it with sops.
+
+    If encryption fails, load and return original file
+    """
     # check if private key is available
     if SOPS_PRIVATE_KEY_ENV not in environ:
         with open(path, "r") as f:
@@ -119,7 +123,7 @@ def read_encrypted_yaml(path: Path) -> dict:
 def traverse_nested_dict(
     data: dict, filter: Callable, operation: Callable, output=None
 ) -> dict:
-    """Go recursively through nested dict and apply operation to values whose keys match filter""" ""
+    """Recursively apply operation to all keys matching the filter."""
     if output is None:
         output = {}
     for key, value in data.items():
@@ -132,8 +136,8 @@ def traverse_nested_dict(
     return output
 
 
-def make_tags_tex(tags_file: Path, tex_file: Path, tag_types: list, tag_subtypes: list):
-    # read in yaml file
+def make_tags_tex(tags_file: Path, tex_file: Path, tag_types: list, tag_subtypes: list) -> None:
+    """Arrange tags from yaml file in groups and subgroups as LaTeX code."""
     tags = read_yaml(tags_file)
     tags_by_type = tags.groupby(by="type")
     tex_output = ""
@@ -169,6 +173,7 @@ def make_tags_tex(tags_file: Path, tex_file: Path, tag_types: list, tag_subtypes
 
 
 def parser_personal_info(path_to_vcard: Path, path_to_photo: Path) -> dict:
+    """Parse vcard and arrange personal info in a dict."""
     with open(path_to_vcard, "r") as f:
         vcard = vobject.readOne(f.read())
     for social_profile in vcard.contents["x-socialprofile"]:
@@ -196,7 +201,8 @@ def parser_personal_info(path_to_vcard: Path, path_to_photo: Path) -> dict:
     return personal_info
 
 
-def fill_template(template: Path, data: dict, output: Path):
+def fill_template(template: Path, data: dict, output: Path) -> None:
+    """Fill template file with data and save them as LaTeX file"""
     env = Environment(
         loader=FileSystemLoader(template.parent),
         variable_start_string="[[",
