@@ -1,9 +1,21 @@
+# tex stuff
 *.log
 *.out
 *.aux
-**/__pycache__
-.DS_Store
+# jabref stuff
 *.bib.bak
 *.bib.sav
 *bib.sav.bak
+# python stuff
+**/__pycache__
+# mac stuff
+.DS_Store
+# sensitive data
 **/*unencrypted.yaml
+# tex files
+./tex/*
+!./tex/altacv.cls
+!./tex/main.tex
+!./tex/fontawesome.sty
+# build results
+*.pdf
