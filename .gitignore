@@ -6,3 +6,4 @@
 *.bib.bak
 *.bib.sav
 *bib.sav.bak
+**/*unencrypted.yaml

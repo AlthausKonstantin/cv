@@ -1,0 +1,36 @@
+Mrs Elisabeth Ullmann:
+    position: Associate Professor, TUM
+    phone: ENC[AES256_GCM,data:Ai44gRfuS7/KOFrm,iv:UM0REJSQEBvkirrBTbJ28pjL/razz5bWGHGmVJXSgNI=,tag:FV1wmgk/i4F2A7SI9LHCXw==,type:int]
+    mail: ENC[AES256_GCM,data:C2DkUKadLbLzQR3O4T3P5zgNzdwUYCX/,iv:JFidMbxAyVHVOb/1QjvW2vxL4ByA31ozMuTiOhcpygE=,tag:2tT9l//eVcTYG2nRWSSR8A==,type:str]
+    url:
+        service: linkedin
+        username: elisabeth-ullmann-26a5b724
+    description: Mrs. Ullmann and me published my master thesis as a paper.
+Mr Eugen Dering:
+    position: R \& D Manager, Vaillant
+    phone: ENC[AES256_GCM,data:ocBNiAukZEx2/AwVwg==,iv:lLak2XqWpJVRSfceUoxYKDqIIJihBRDp/cVlsjmOnwA=,tag:PdCpAob+qJbMQqPOQx99LQ==,type:int]
+    mail: ENC[AES256_GCM,data:1Ow3AUzCMIq8mlklEqiktZ+3IgdZaPKeI7y/qoKAWA==,iv:Nttq+qIX9TIsXhtljauj2veyxxVVD2io+uAh3r5lNM8=,tag:5G13wbJxoTrWsEt/R3sJpg==,type:str]
+    url:
+        service: xing
+        username: Eugen_Dering3
+    description: Mr. Dering supervised me building up the first SiL infrastructure at Vaillant.
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1mvz6q76p9sl5w4hxhy89n2qace07yfg7r2lsqlv60jg6t7j394nq7wq5yg
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBmQWxldWoweU95L1JwUzBV
+            eWxtZUpOOFZVbnRTUmRwNFQ3eWdsNjUwRG5nCnRNN3E5OGpZTnNkVDEzZHB0UUVG
+            alJTZEtIYTJ6RUIzRmJ5YmtwYjhYZEUKLS0tIHJtZW52WVhxQk5XWi9UUE11YU52
+            TC9QWDBEcngrVllMbTBLNVRYV2FhYTAKdSo3gVOrwLJTxypX6nhar5Oh9/Ixvo8q
+            aEbxIcpWQ7q/H+lKY+E9M4Xvzj3ok+ah2sq13d7v0xW0gm5oo0dGgQ==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2024-07-21T14:32:12Z"
+    mac: ENC[AES256_GCM,data:vMEQZjWdQhfL+/iZv3/J+apmQnjRObNKUtdGEyFpV/sq6cSglJZNDJzIGtn7+D0VUhRwQktiBsEMT8ueM70ltKJsGapBBvSCZOmEmqfb2fIe3x5uO6HbiXaz9hILzQICwS/mNwPjiF7Ib2M4NWSHEtoCq0tZvGZNyfjvxz1a448=,iv:gzVMUjjcVuvV3ubk/Vko7BDHoLLC6+6YqEhpwQjvzII=,tag:1poLz4cNBifZFZL3t1kunw==,type:str]
+    pgp: []
+    encrypted_regex: (phone|mail)
+    version: 3.8.1
