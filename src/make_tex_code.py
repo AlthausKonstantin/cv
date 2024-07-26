@@ -227,7 +227,7 @@ def yaml_to_tex(section: str, data_dir: Path, tex_dir: Path) -> Path:
         data = data.sort_values("start", ascending=False)
     latex_command = LATEX_COMMANDS[section]
     data["tex_code"] = data.apply(row_to_tex_code, axis=1, latex_command=latex_command)
-    tex_output = "\n\\bigskip".join(data.tex_code.values)
+    tex_output = "\n\\bigskip\n".join(data.tex_code.values)
     with open(tex_file, "w") as text_file:
         text_file.write(tex_output)
     print(f"wrote {tex_file}")
@@ -302,7 +302,6 @@ def make_cvproject(row, options=None):
     cv_project = title + when + links
     what = list_to_tex_list(row.description)
     tags = taglist_to_texcode(row.tag)
-    tags += "\\newline"
     punchline = clean_string(row.punchline, mandatory_suffix="!")
     punchline = enclose_in_tex_environment(punchline, "quote")
     cv_project = "\n".join([cv_project, punchline, what, tags])
