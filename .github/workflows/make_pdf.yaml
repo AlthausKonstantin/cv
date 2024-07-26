@@ -12,4 +12,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Start containers
-        run: docker-compose -f "docker-compose.yml" up -d --build
+        run: docker-compose -f "docker-compose.yml" up
