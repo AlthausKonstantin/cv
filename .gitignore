@@ -13,9 +13,7 @@
 # sensitive data
 **/*unencrypted.yaml
 # tex files
-./tex/*
-!./tex/altacv.cls
+**/*.tex
 !./tex/main.tex
-!./tex/fontawesome.sty
 # build results
 *.pdf
