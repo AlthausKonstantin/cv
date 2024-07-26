@@ -1,3 +1,4 @@
+"""Constants for the CV generator; functions as configuration."""
 from datetime import datetime
 from pathlib import Path
 

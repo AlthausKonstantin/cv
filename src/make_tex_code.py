@@ -1,6 +1,7 @@
+""" Functions to decrypt, load and arrange data in tex source code. """
 import subprocess
-import warnings
 import tempfile
+import warnings
 from os import environ
 from pathlib import Path
 from re import compile, findall, sub
@@ -215,6 +216,12 @@ def fill_template(template: Path, data: dict, output: Path) -> None:
 
 
 def yaml_to_tex(section: str, data_dir: Path, tex_dir: Path) -> Path:
+    """
+    Open yaml file as dataframe and convert rows to tex code.
+
+    The section governs the latex command used to format the data.
+    """
+
     yaml_file = data_dir / f"{section}.yaml"
     tex_file = tex_dir / f"{section}.tex"
     data = read_yaml(yaml_file)
@@ -234,7 +241,8 @@ def yaml_to_tex(section: str, data_dir: Path, tex_dir: Path) -> Path:
     return tex_file
 
 
-def row_to_tex_code(row, latex_command="cvevent", options=None):
+def row_to_tex_code(row: pd.Series, latex_command="cvevent", options=None) -> str:
+    """Dispatch row to the correct function based on the latex command."""
     if latex_command == "cvevent":
         return make_cvevent(row, options=options)
     if latex_command == "cvproject":
@@ -247,7 +255,8 @@ def row_to_tex_code(row, latex_command="cvevent", options=None):
         return ""
 
 
-def make_cvreference(row, options=None) -> str:
+def make_cvreference(row: pd.Series, options=None) -> str:
+    """Convert the data in row to a cvreverence tex code."""
     who = row["title"]
     where = row.position
     phone = row.get("phone", "")
@@ -279,7 +288,8 @@ def make_cvreference(row, options=None) -> str:
     return ref
 
 
-def make_cvtag(row, options=None):
+def make_cvtag(row: pd.Series, options=None) -> str:
+    """Convert the data in row to a cvtag tex code."""
     if options is None:
         tag = f"\\cvtag{{ {row.title} }}"
     else:
@@ -290,7 +300,8 @@ def make_cvtag(row, options=None):
     return tag
 
 
-def make_cvproject(row, options=None):
+def make_cvproject(row: pd.Series, options=None) -> str:
+    """Convert the data in row to a cvproject tex code."""
     title = f"\\cvproject{{ {row.title} }}{{| {row.subtitle} }}"
     when = format_time_period(row.start, row.end)
     if row.urls:
@@ -308,7 +319,8 @@ def make_cvproject(row, options=None):
     return put_in_pagebreakfree_section(cv_project)
 
 
-def make_cvevent(row, options=None):
+def make_cvevent(row: pd.Series, options=None) -> str:
+    """Convert the data in row to cvevent tex code"""
     title = f"\\cvevent{{ {row.title} }}{{| {row.employee} }}"
     when = format_time_period(row.start, row.end)
     location = getattr(row, "location", "")
@@ -328,6 +340,7 @@ def make_cvevent(row, options=None):
 
 
 def clean_string(string: str, mandatory_suffix=None) -> str:
+    """Remove unnecessary whitespace and add suffix if not present."""
     string = string.strip()
     string = sub(r"\s+", " ", string)
     if mandatory_suffix:
@@ -336,7 +349,8 @@ def clean_string(string: str, mandatory_suffix=None) -> str:
     return string
 
 
-def format_time_period(start, end):
+def format_time_period(start, end) -> str:
+    """Make duration string from start and end."""
     if pd.isnull(end):
         return f"{{ {start:%m/%Y} -- now }}"
     else:
@@ -344,6 +358,7 @@ def format_time_period(start, end):
 
 
 def list_to_tex_list(data: list) -> str:
+    """Arrange content in list in tex itemize environment."""
     if not data:
         return ""
     tex_list = "\\begin{itemize}"
@@ -355,6 +370,7 @@ def list_to_tex_list(data: list) -> str:
 
 
 def taglist_to_texcode(data: list) -> str:
+    """Apply special formatting to inline tag lists."""
     if not data:
         return ""
     tex_list = ""
@@ -365,6 +381,7 @@ def taglist_to_texcode(data: list) -> str:
 
 
 def linkdict_to_texcode(data: dict) -> str:
+    """Make a list of printinfo tex code commands."""
     if not data:
         return ""
     tex_list = ""
@@ -376,13 +393,15 @@ def linkdict_to_texcode(data: dict) -> str:
 
 
 def put_in_pagebreakfree_section(tex_code: str) -> str:
+    """Enclose tex_code in page-break free environment"""
     output = "\\begin{breakfreeunit}\n"
     output += tex_code
     output += "\n\\end{breakfreeunit}"
     return output
 
 
-def enclose_in_tex_environment(tex_code, environment, kwarg=None):
+def enclose_in_tex_environment(tex_code: str, environment: str, kwarg=None) -> str:
+    """Enclose tex_code in environment command."""
     if kwarg:
         output = f"\\begin{{{environment}}}{{{kwarg}}}\n"
     else:
@@ -392,19 +411,22 @@ def enclose_in_tex_environment(tex_code, environment, kwarg=None):
     return output
 
 
-def get_icon_for_link(url):
+def get_icon_for_link(url: str) -> str:
+    """Return icon for url."""
     if "github" in url:
         return "faGithub"
     else:
         return "faGlobe"
 
 
-def check_for_duplicate_icons(tex_code):
+def check_for_duplicate_icons(tex_code: str) -> str:
+    """Check if tex_code has multiple occurrences of the same icon."""
     icons = findall(r"\\fa[A-Z]\w+", tex_code)
     assert len(icons) == len(set(icons)), "Duplicate url-icons look stupid"
 
 
-def shorten_url(url):
+def shorten_url(url: str) -> str:
+    """Make a tiny url."""
     is_github_url = "github.com" in url
     try:
         shortener = Shortener()
