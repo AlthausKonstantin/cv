@@ -1,4 +1,5 @@
 import subprocess
+import warnings
 import tempfile
 from os import environ
 from pathlib import Path
@@ -152,12 +153,13 @@ def make_tags_tex(tags_file: Path, tex_file: Path, tag_types: list, tag_subtypes
             if tag_subtype not in group.groups:
                 continue
             subgroup = group.get_group(tag_subtype)
-            subgroup["tex_code"] = subgroup.apply(
-                row_to_tex_code,
-                axis=1,
-                latex_command="cvtag",
-                options={"color": "accent"},
-            )
+            with warnings.catch_warnings(action="ignore"):
+                subgroup["tex_code"] = subgroup.apply(
+                    row_to_tex_code,
+                    axis=1,
+                    latex_command="cvtag",
+                    options={"color": "accent"},
+                )
             subgroup = subgroup.sort_values(by="importance", ascending=False)
             subgroup_content = "\n".join(subgroup.tex_code.values)
             subgroup_content_list.append(subgroup_content)
