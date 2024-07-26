@@ -9,8 +9,7 @@ RUN chmod +x /usr/local/bin/sops
 
 WORKDIR /usr/src/app
 
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install Jinja2 pandas pyshorteners PyYAML vobject
 
 COPY . .
 
