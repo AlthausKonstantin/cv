@@ -1,0 +1,25 @@
+name: Compile PDF
+on:
+  workflow_call:
+    inputs:
+      artifact-name:
+        required: true
+        type: string
+    secrets:
+      sops-token:
+        required: false
+jobs:
+  compile_pdf:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Compile PDF in Container
+        run: docker compose -f "docker-compose.yml" up
+      - name: Upload PDF as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{inputs.artifact-name}}
+          path: ./dockervolume/*.pdf
+          if-no-files-found: error
