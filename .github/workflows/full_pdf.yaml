@@ -8,4 +8,6 @@ jobs:
   make_redacted_pdf:
     uses: ./.github/workflows/compile_pdf.yaml
     with:
-      artifact-name: Redacted CV
+      artifact-name: Full CV
+      redacted_version: true
+    secrets: inherit
