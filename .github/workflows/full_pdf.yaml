@@ -1,13 +1,13 @@
-name: Compile Public Version
+name: Compile Full Version
 on:
   push:
     branches:
       - main
       - feat/*
 jobs:
-  make_redacted_pdf:
+  make_full_pdf:
     uses: ./.github/workflows/compile_pdf.yaml
     with:
       artifact-name: Full CV
-      redacted_version: true
+      redacted_version: false
     secrets: inherit
