@@ -22,8 +22,8 @@ jobs:
         run: docker compose -f "docker-compose.yml" up cv_redacted
       - name: Compile Full PDF in Container
         if: "${{ ! inputs.redacted_version }}"
-        run: docker compose -f "docker-compose.yml" -e SOPS_AGE_KEY=${{secrets.AGE_SECRET_KEY}}
-          up cv
+        run: docker compose  -f "docker-compose.yml" run -e SOPS_AGE_KEY=${{secrets.AGE_SECRET_KEY}}
+          cv
       - name: Upload PDF as artifact
         uses: actions/upload-artifact@v4
         with:
