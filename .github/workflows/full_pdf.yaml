@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - feat/*
 jobs:
   make_full_pdf:
     uses: ./.github/workflows/compile_pdf.yaml
