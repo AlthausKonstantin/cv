@@ -15,12 +15,12 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: Redacted CV
-          path: ${{GITHUB_WORKSPACE}}/Artifacts
+          path: ./Artifacts
       - name: Download Full CV
         uses: actions/download-artifact@master
         with:
           name: Full CV
-          path: ${{GITHUB_WORKSPACE}}/Artifacts
+          path: ./Artifacts
       - name: Get Date for Release Tag
         id: date_maker
         run: echo "::set-output name=date::$(date +'%Y%m%d')"
@@ -29,6 +29,6 @@ jobs:
         with:
           tag_name: CV-${{ steps.date.outputs.date }}
           name: CV Build from ${{ steps.date.outputs.date }}
-          files: ${{GITHUB_WORKSPACE}}/Artifacts/*
+          files: ./Artifacts/*
           fail_on_unmatched_files: true
           make_latest: true
