@@ -1,5 +1,6 @@
 """ Functions to decrypt, load and arrange data in tex source code. """
 import subprocess
+from shutil import move
 import tempfile
 import warnings
 from os import environ
@@ -52,7 +53,7 @@ def compile_main() -> None:
         else:
             for file in OUTPUT_DIR.glob("*"):
                 file.unlink()
-        output.rename(OUTPUT_DIR / OUTPUT)
+        move(output, OUTPUT_DIR / OUTPUT)
 
 
 def make_source_files() -> None:
