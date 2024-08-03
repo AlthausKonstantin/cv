@@ -1,9 +1,5 @@
 name: Compile Public Version
-on:
-  push:
-    branches:
-      - main
-      - feat/*
+on: push
 jobs:
   make_redacted_pdf:
     uses: ./.github/workflows/compile_pdf.yaml
