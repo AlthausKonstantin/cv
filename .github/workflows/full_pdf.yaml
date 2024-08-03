@@ -1,0 +1,12 @@
+name: Compile Full Version
+on:
+  push:
+    branches:
+      - main
+jobs:
+  make_full_pdf:
+    uses: ./.github/workflows/compile_pdf.yaml
+    with:
+      artifact-name: Full CV
+      redacted_version: false
+    secrets: inherit

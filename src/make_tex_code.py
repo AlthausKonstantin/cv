@@ -1,5 +1,6 @@
 """ Functions to decrypt, load and arrange data in tex source code. """
 import subprocess
+from shutil import move
 import tempfile
 import warnings
 from os import environ
@@ -15,7 +16,7 @@ from yaml import safe_load
 
 from constants import (BIBLIOGRAPHY, BIBLIOGRAPHY_TEMPLATE,
                        BIBLIOGRAPHY_TEX_FILE, DATA_DIR, LATEX_COMMANDS,
-                       MAIN_TEX_FILE, PERSONAL_INFO_TEMPLATE,
+                       MAIN_TEX_FILE, OUTPUT, OUTPUT_DIR, PERSONAL_INFO_TEMPLATE,
                        PERSONAL_INFO_TEX_FILE, PHOTO, PROJECT_DIR, SECTIONS,
                        SOPS_ENCRYPTION_FLAG, SOPS_PRIVATE_KEY_ENV,
                        SUPPORTED_INFOFIELDS, TAGS_FILE, TAGS_SUBTYPES,
@@ -47,7 +48,12 @@ def compile_main() -> None:
                     cwd=TEX_DIR,
                 )
         output = Path(dir) / "main.pdf"
-        output.rename(PROJECT_DIR / "cv.pdf")
+        if not OUTPUT_DIR.exists():
+            OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        else:
+            for file in OUTPUT_DIR.glob("*"):
+                file.unlink()
+        move(output, OUTPUT_DIR / OUTPUT)
 
 
 def make_source_files() -> None:

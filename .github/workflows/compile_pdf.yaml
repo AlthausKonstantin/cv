@@ -1,0 +1,32 @@
+name: Compile PDF
+on:
+  workflow_call:
+    inputs:
+      artifact-name:
+        required: true
+        type: string
+      redacted_version:
+        required: false
+        type: boolean
+        default: true
+jobs:
+  compile_pdf:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    environment: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Compile Redacted PDF in Container
+        if: "${{ inputs.redacted_version }}"
+        run: docker compose -f "docker-compose.yml" up cv_redacted
+      - name: Compile Full PDF in Container
+        if: "${{ ! inputs.redacted_version }}"
+        run: docker compose  -f "docker-compose.yml" run -e SOPS_AGE_KEY=${{secrets.AGE_SECRET_KEY}}
+          cv
+      - name: Upload PDF as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{inputs.artifact-name}}
+          path: ./dockervolume/*.pdf
+          if-no-files-found: error

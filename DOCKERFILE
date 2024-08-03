@@ -1,0 +1,17 @@
+FROM python:3-slim
+
+RUN apt-get update
+RUN apt-get install -y git curl
+RUN apt-get install -y texlive-full
+RUN curl -LO https://github.com/getsops/sops/releases/download/v3.9.0/sops-v3.9.0.linux.amd64
+RUN mv sops-v3.9.0.linux.amd64 /usr/local/bin/sops
+RUN chmod +x /usr/local/bin/sops
+
+WORKDIR /usr/src/app
+
+RUN pip install Jinja2 pandas pyshorteners PyYAML vobject
+
+COPY . .
+
+
+CMD [ "python", "./src/main.py" ]
