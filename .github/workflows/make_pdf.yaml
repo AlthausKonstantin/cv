@@ -12,7 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Compile PDF in Container
-        run: docker-compose -f "docker-compose.yml" up
+        run: docker compose -f "docker-compose.yml" up
       - name: Upload PDF as artifact
         uses: actions/upload-artifact@v4
         with:
