@@ -6,6 +6,6 @@ on:
       - feat/*
 jobs:
   make_redacted_pdf:
-    uses: AlthausKonstantin/cv/.github/workflows/compile_pdf.yml@feat/gh-actions
+    uses: AlthausKonstantin/cv/.github/workflows/compile_pdf.yml
     with:
       artifact-name: "Redacted CV"
