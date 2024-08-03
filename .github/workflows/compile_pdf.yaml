@@ -15,8 +15,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Compile PDF in Container
-        run: docker compose -f "docker-compose.yml" up
+      - name: Compile Redacted PDF in Container
+        run: docker compose -f "docker-compose.yml" up cv_redacted
+      - name: Compile Full PDF in Container
+        if: "${{ github.event.inputs.sops-token != '' }}"
+        run: docker compose -f "docker-compose.yml" -e SOPS_AGE_KEY=${{secrets.sops-token}}
+          up cv
       - name: Upload PDF as artifact
         uses: actions/upload-artifact@v4
         with:

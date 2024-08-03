@@ -9,3 +9,9 @@ jobs:
     uses: ./.github/workflows/compile_pdf.yaml
     with:
       artifact-name: Redacted CV
+  make_full_pdf:
+    uses: ./.github/workflows/compile_pdf.yaml
+    with:
+      artifact-name: Full CV
+    secrets:
+      sops-token: ${{secrets.AGE_SECRET_KEY}}
