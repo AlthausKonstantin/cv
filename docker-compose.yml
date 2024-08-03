@@ -1,8 +1,19 @@
 version: "3.8"
 services:
-  cv:
+  cv_redacted:
     build:
       context: .
       dockerfile: DOCKERFILE
     volumes:
       - ./dockervolume:/usr/src/app/Build
+  cv:
+    build:
+      context: .
+      dockerfile: DOCKERFILE
+      secrets:
+        - AGE-SECRET-KEY
+    volumes:
+      - ./dockervolume:/usr/src/app/Build
+secrets:
+  AGE-SECRET-KEY:
+    environment: SOPS_AGE_KEY
