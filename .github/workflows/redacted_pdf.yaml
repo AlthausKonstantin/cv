@@ -5,12 +5,12 @@ on:
       - main
       - feat/*
 jobs:
-  compile_pdf:
+  make_redacted_pdf:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Compile
-        uses: ./.github/actions/compile_pdf.yml
+        uses: ./.github/workflows/compile_pdf.yml
         with:
           artifact-name: "Redacted CV"
