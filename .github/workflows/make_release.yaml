@@ -14,12 +14,12 @@ jobs:
       - name: Download Redacted CV
         uses: actions/download-artifact@v4
         with:
-          name: Redacted CV
+          name: RedactedCV
           path: ./Artifacts
       - name: Download Full CV
         uses: actions/download-artifact@v4
         with:
-          name: Full CV
+          name: FullCV
           path: ./Artifacts
       - name: Get Date for Release Tag
         id: date_maker

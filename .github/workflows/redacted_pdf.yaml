@@ -4,4 +4,4 @@ jobs:
   make_redacted_pdf:
     uses: ./.github/workflows/compile_pdf.yaml
     with:
-      artifact-name: RedactedCV.pdf
+      artifact-name: RedactedCV
