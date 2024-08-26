@@ -3,39 +3,47 @@ on:
   push:
     branches:
       - main
+permissions:
+  contents: write
 jobs:
   compile_redacted_cv:
     name: Compile Redacted CV
     uses: ./.github/workflows/compile_pdf.yaml
     with:
       artifact-name: RedactedCV
+    secrets: inherit
+  compile_full_cv:
+    name: Compile Full CV
+    uses: ./.github/workflows/compile_pdf.yaml
+    with:
+      artifact-name: FullCV
+      redacted_version: false
+    secrets: inherit
   create_release:
     name: Create Release
     runs-on: ubuntu-latest
-    needs: compile_redacted_cv
+    needs: [compile_full_cv, compile_redacted_cv]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
       - name: Download Redacted CV
         uses: actions/download-artifact@v4
         with:
           name: RedactedCV
-          path: ./Artifacts
-      - name: Unzip Redacted CV
-        run: unzip ./Artifacts/RedactedCV.zip
-      # - name: Download Full CV
-      #   uses: actions/download-artifact@v4
-      #   with:
-      #     name: FullCV
-      #     path: ./Artifacts
-      - name: Get Date for Release Tag
+          path: ./RedactedCV
+      - name: Download Full CV
+        uses: actions/download-artifact@v4
+        with:
+          name: FullCV
+          path: ./FullCV
+      - name: Save Date for Release Tag
         id: date_maker
-        run: echo "::set-output name=date::$(date +'%Y%m%d')"
+        run: echo "BUILD_TIME=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: CV-${{ steps.date.outputs.date }}
-          name: CV Build from ${{ steps.date.outputs.date }}
-          files: ./Artifacts/*.pdf
+          tag_name: CV-${{env.BUILD_TIME}}
+          name: CV Build from ${{env.BUILD_TIME}}
+          files: |
+            ./RedactedCV/*.pdf
+            ./FullCV/*.age
           fail_on_unmatched_files: true
           make_latest: true

@@ -19,13 +19,24 @@ jobs:
       - name: Compile Redacted PDF in Container
         if: "${{ inputs.redacted_version }}"
         run: docker compose -f "docker-compose.yml" up cv_redacted
-      - name: Compile Full PDF in Container
-        if: "${{ ! inputs.redacted_version }}"
-        run: docker compose  -f "docker-compose.yml" run -e SOPS_AGE_KEY=${{secrets.AGE_SECRET_KEY}}
-          cv
       - name: Upload PDF as artifact
+        if: "${{ inputs.redacted_version }}"
         uses: actions/upload-artifact@v4
         with:
           name: ${{inputs.artifact-name}}
           path: ./dockervolume/*.pdf
+          if-no-files-found: error
+      - name: Compile Full PDF in Container
+        if: "${{ ! inputs.redacted_version }}"
+        shell: bash
+        env:
+          SOPS_AGE_KEY: ${{ secrets.AGE_SECRET_KEY }}
+          AGE_RECIPIENT: ${{ secrets.AGE_RECIPIENT }}
+        run: docker compose -f "docker-compose.yml" up cv
+      - name: Upload Encrypted PDF as artifact
+        if: "${{ ! inputs.redacted_version }}"
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{inputs.artifact-name}}
+          path: ./dockervolume/*
           if-no-files-found: error

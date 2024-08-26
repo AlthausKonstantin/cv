@@ -5,14 +5,14 @@ services:
       dockerfile: DOCKERFILE
     volumes:
       - ./dockervolume:/usr/src/app/Build
+    command: python ./src/main.py
   cv:
     build:
       context: .
       dockerfile: DOCKERFILE
-      secrets:
-        - AGE-SECRET-KEY
+    environment:
+      - SOPS_AGE_KEY=${SOPS_AGE_KEY}
+      - AGE_RECIPIENT=${AGE_RECIPIENT}
     volumes:
       - ./dockervolume:/usr/src/app/Build
-secrets:
-  AGE-SECRET-KEY:
-    environment: SOPS_AGE_KEY
+    command: bash -c "python ./src/main.py && ./encrypt_build.sh"
