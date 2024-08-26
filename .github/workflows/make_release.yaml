@@ -4,16 +4,17 @@ on:
     branches:
       - main
 jobs:
+  compile_redacted_cv:
+    name: Compile Redacted CV
+    uses: ./.github/workflows/compile_pdf.yaml
+    with:
+      artifact-name: RedactedCV
   create_release:
     name: Create Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Compile Redacted CV
-        uses: ./.github/workflows/compile_pdf.yaml
-        with:
-          artifact-name: RedactedCV
       - name: Download Redacted CV
         uses: actions/download-artifact@v4
         with:
