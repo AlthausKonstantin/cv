@@ -1,9 +1,8 @@
 name: Make Release
 on:
-  workflow_run:
-    workflows: ["Compile Full Version", "Compile Public Version"]
-    types:
-      - completed
+  push:
+    branches:
+      - main
 jobs:
   create_release:
     name: Create Release
@@ -11,16 +10,22 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Compile Redacted CV
+        uses: ./.github/workflows/compile_pdf.yaml
+        with:
+          artifact-name: RedactedCV
       - name: Download Redacted CV
         uses: actions/download-artifact@v4
         with:
           name: RedactedCV
           path: ./Artifacts
-      - name: Download Full CV
-        uses: actions/download-artifact@v4
-        with:
-          name: FullCV
-          path: ./Artifacts
+      - name: Unzip Redacted CV
+        run: unzip ./Artifacts/RedactedCV.zip
+      # - name: Download Full CV
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: FullCV
+      #     path: ./Artifacts
       - name: Get Date for Release Tag
         id: date_maker
         run: echo "::set-output name=date::$(date +'%Y%m%d')"
@@ -29,6 +34,6 @@ jobs:
         with:
           tag_name: CV-${{ steps.date.outputs.date }}
           name: CV Build from ${{ steps.date.outputs.date }}
-          files: ./Artifacts/*
+          files: ./Artifacts/*.pdf
           fail_on_unmatched_files: true
           make_latest: true
