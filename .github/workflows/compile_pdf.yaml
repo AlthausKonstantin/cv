@@ -13,7 +13,6 @@ jobs:
   compile_pdf:
     timeout-minutes: 10
     runs-on: ubuntu-latest
-    environment: build
     steps:
       - name: Checkout
         uses: actions/checkout@v4
