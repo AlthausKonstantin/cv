@@ -56,3 +56,21 @@ Modelling a traffic light assistant:
     - LaTeX
     - Research
     - Optimization
+Procedural CV:
+  subtitle: Automatically create this document
+  punchline: I was tired of formatting my CV, so I wrote a pipeline to do it for me
+  start: 2023-09-01
+  end: 2024-10-04
+  description:
+    - Automatically create and distribute my CV using a GitHub pipeline
+    - Data, formatting, and infrastructure are all implemented as code
+    - Encrypt sensitive data
+  tag:
+    - Python
+    - CI/CD Pipelines
+    - GitHub
+    - Docker
+    - LaTeX
+    - Open Source
+  urls:
+    - github: https://github.com/AlthausKonstantin/cv
