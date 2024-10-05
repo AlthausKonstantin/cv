@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%
-% This is altacv.cls (v1.6.5, 3 Nov 2022) written by
+% This is based on altacv.cls (v1.6.5, 3 Nov 2022) written by
 % LianTze Lim (liantze@gmail.com).alta
 % This is also a fork (v1.6.5a, 29 Jan 2023) written by
 % Nicolás Omar González Passerino (nicolas.passerino@gmail.com)
@@ -18,7 +18,8 @@
 % - https://github.com/stefanogermano Fixed bad boxes and undefined font shape (July 2018)
 % - https://github.com/foohyfooh Fixed blank spaces in \cvevent and bad link in README.md (June 2018)
 % - https://github.com/logological Remove redundant hyperref and typos (Apr 2021)
-
+%
+% Based on above version this fork/modified version has been made by Konstantin Althaus (althaus.konstantin.95@gmail.com, 06/2024)
 %%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{altacv}[2022/11/03 AltaCV v1.6.5, yet another alternative class for a resume/curriculum vitae.]
