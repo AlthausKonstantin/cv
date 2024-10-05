@@ -33,7 +33,7 @@ LATEX_COMMANDS = {
     "references": "cvreference",
 }
 
-OUTPUT = f"CV Althaus {datetime.now().strftime('%Y-%m')}.pdf"
+OUTPUT = f"CV-Althaus-{datetime.now().strftime('%Y-%m')}.pdf"
 OUTPUT_DIR = Path(PROJECT_DIR / "Build")
 
 SOPS_ENCRYPTION_FLAG = "sops"
