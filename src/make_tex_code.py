@@ -230,7 +230,7 @@ def yaml_to_tex(section: str, data_dir: Path, tex_dir: Path) -> Path:
     has_durations &= "end" in data.columns
     if has_durations:
         data[["start", "end"]] = data[["start", "end"]].apply(pd.to_datetime)
-        data = data.applymap(lambda x: clean_string(x) if isinstance(x, str) else x)
+        data = data.map(lambda x: clean_string(x) if isinstance(x, str) else x)
         data = data.sort_values("start", ascending=False)
     latex_command = LATEX_COMMANDS[section]
     data["tex_code"] = data.apply(row_to_tex_code, axis=1, latex_command=latex_command)
@@ -306,7 +306,10 @@ def make_cvproject(row: pd.Series, options=None) -> str:
     when = format_time_period(row.start, row.end)
     if row.urls:
         # pandas saves a dict in a list with one element
-        links = linkdict_to_texcode(row.urls[0])
+        urls = {}
+        for url_dict in row.urls:
+            urls.update(url_dict)
+        links = linkdict_to_texcode(urls)
         links = "{{" + links + "}}"
     else:
         links = "{}"
@@ -415,7 +418,7 @@ def get_icon_for_link(url: str) -> str:
     """Return icon for url."""
     if "github" in url:
         return "faGithub"
-    if "https://doi.org" in url:
+    if "doi" in url:
         return "faDocument"
     else:
         return "faGlobe"
@@ -430,5 +433,5 @@ def check_for_duplicate_icons(tex_code: str) -> str:
 def shorten_url(url: str) -> str:
     """Shorten urls for better readability."""
     url_fragment = url.replace("https://github.com/AlthausKonstantin", "")
-    url_fragment = url.replace("https://doi.org/", "")
+    url_fragment = url_fragment.replace("https://doi.org/", "")
     return url_fragment
