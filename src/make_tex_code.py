@@ -64,12 +64,6 @@ def make_source_files() -> None:
         personal_info,
         PERSONAL_INFO_TEX_FILE,
     )
-    # make bibliography
-    fill_template(
-        BIBLIOGRAPHY_TEMPLATE,
-        {"bibliography": BIBLIOGRAPHY},
-        BIBLIOGRAPHY_TEX_FILE,
-    )
     # make tags
     make_tags_tex(TAGS_FILE, TAGS_TEX_FILE, TAGS_TYPES, TAGS_SUBTYPES)
     # make main sections
@@ -392,9 +386,9 @@ def linkdict_to_texcode(data: dict) -> str:
         return ""
     tex_list = ""
     for link_type, url in data.items():
-        url = shorten_url(url)
+        short_url = shorten_url(url)
         icon_name = get_icon_for_link(link_type)
-        tex_list += f"\\printinfo{{ \\{icon_name} }}{{{url}}}[{url}]"
+        tex_list += f"\\printinfo{{ \\{icon_name} }}{{{short_url}}}[{url}]"
     return tex_list
 
 
@@ -421,6 +415,8 @@ def get_icon_for_link(url: str) -> str:
     """Return icon for url."""
     if "github" in url:
         return "faGithub"
+    if "https://doi.org" in url:
+        return "faDocument"
     else:
         return "faGlobe"
 
@@ -432,13 +428,7 @@ def check_for_duplicate_icons(tex_code: str) -> str:
 
 
 def shorten_url(url: str) -> str:
-    """Make a tiny url."""
-    is_github_url = "github.com" in url
-    try:
-        shortener = Shortener()
-        if is_github_url:
-            return shortener.gitio.short(url)
-        else:
-            return shortener.tinyurl.short(url)
-    except Exception:
-        return url
+    """Shorten urls for better readability."""
+    url_fragment = url.replace("https://github.com/AlthausKonstantin", "")
+    url_fragment = url.replace("https://doi.org/", "")
+    return url_fragment

@@ -15,6 +15,7 @@ Explicit Extrapolation Methods:
     - Research
   urls:
     - github: https://github.com/AlthausKonstantin/Extrapolation
+    - doi: https://doi.org/10.1109/HPEC55821.2022.9926357
 Rare Event Estimation:
   subtitle: Publication of my master thesis
   punchline: My master thesis is so good, now it is a publication in a top journal
@@ -39,6 +40,7 @@ Rare Event Estimation:
     - Stochastic Analysis
   urls:
     - github: https://github.com/AlthausKonstantin/rareeventestimation
+    - doi: https://doi.org/10.1137/23M1565966
 Modelling a traffic light assistant:
   subtitle: Joint project with Continental
   punchline: Optimally drive a car through traffic lights
