@@ -64,8 +64,6 @@
 \renewcommand{\itemmarker}{{\small\textbullet}}
 \renewcommand{\ratingmarker}{\faCircle}
 
-\input{bibliography.tex}
-
 
 \begin{document}
 \renewcommand{\today}{\ifcase \month \or 01\or 02\or 03\or 04\or 05 \or 06\or 07\or 08\or 09\or 10\or 11\or 12\fi/\number\year}
@@ -136,14 +134,6 @@
 			\input{education.tex}
 		\end{breakfreeunit}
 		% ----- EDUCATION -----
-
-		% ----- PUBLICATIONS -----
-		\begin{breakfreeunit}
-			\cvsection{Publications}
-			\nocite{*}
-			\printbibliography[heading=pubtype,title={\printinfo{\faFile*[regular]}{Journal Articles}},type=article]
-		\end{breakfreeunit}
-		% ----- PUBLICATIONS -----
 	\end{paracol}
 \end{sloppypar}
 \end{document}

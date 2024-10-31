@@ -64,12 +64,6 @@ def make_source_files() -> None:
         personal_info,
         PERSONAL_INFO_TEX_FILE,
     )
-    # make bibliography
-    fill_template(
-        BIBLIOGRAPHY_TEMPLATE,
-        {"bibliography": BIBLIOGRAPHY},
-        BIBLIOGRAPHY_TEX_FILE,
-    )
     # make tags
     make_tags_tex(TAGS_FILE, TAGS_TEX_FILE, TAGS_TYPES, TAGS_SUBTYPES)
     # make main sections
@@ -312,7 +306,10 @@ def make_cvproject(row: pd.Series, options=None) -> str:
     when = format_time_period(row.start, row.end)
     if row.urls:
         # pandas saves a dict in a list with one element
-        links = linkdict_to_texcode(row.urls[0])
+        urls = {}
+        for url_dict in row.urls:
+            urls.update(url_dict)
+        links = linkdict_to_texcode(urls)
         links = "{{" + links + "}}"
     else:
         links = "{}"
@@ -392,9 +389,9 @@ def linkdict_to_texcode(data: dict) -> str:
         return ""
     tex_list = ""
     for link_type, url in data.items():
-        url = shorten_url(url)
+        short_url = shorten_url(url)
         icon_name = get_icon_for_link(link_type)
-        tex_list += f"\\printinfo{{ \\{icon_name} }}{{{url}}}[{url}]"
+        tex_list += f"\\printinfo{{ \\{icon_name} }}{{{short_url}}}[{url}]"
     return tex_list
 
 
@@ -421,6 +418,8 @@ def get_icon_for_link(url: str) -> str:
     """Return icon for url."""
     if "github" in url:
         return "faGithub"
+    if "doi" in url:
+        return "faFile"
     else:
         return "faGlobe"
 
@@ -432,13 +431,7 @@ def check_for_duplicate_icons(tex_code: str) -> str:
 
 
 def shorten_url(url: str) -> str:
-    """Make a tiny url."""
-    is_github_url = "github.com" in url
-    try:
-        shortener = Shortener()
-        if is_github_url:
-            return shortener.gitio.short(url)
-        else:
-            return shortener.tinyurl.short(url)
-    except Exception:
-        return url
+    """Shorten urls for better readability."""
+    url_fragment = url.replace("https://github.com/AlthausKonstantin", "")
+    url_fragment = url_fragment.replace("https://doi.org/", "")
+    return url_fragment
