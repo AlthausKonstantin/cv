@@ -13,7 +13,7 @@ Intern Research and Development:
     - Matlab
     - LaTeX
     - Research
-Working student software development:
+Working Student Software Development:
   punchline: Optimize lay-up technology for complex composites
   employee: Cevotec
   end: 2019-07-01
@@ -30,41 +30,8 @@ Working student software development:
     - Bitbucket
     - Julia
     - Genetic Algorithms
-    - optimization
-Working Student financial risk analysis:
-  punchline: Show asset managers what the real risks in their portfolio are
-  employee: MEAG
-  industry: Asset Management
-  location: Munich
-  start: 2021-12-01
-  end: 2022-07-01
-  description:
-    - Automatic parsing and compiling of risk data of financial assets in R
-    - Automatic visualization of risk metrics in PowerBi, PowerPoint, and interactive
-      HTML reports in R
-    - Creating custom R packages including unit testing and documentation
-  tag:
-    - R
-    - Tidyverse
-    - Azure DevOps
-    - PowerBi
-Junior actuary for private health insurance:
-  punchline: Automate actuarial computations in web dashboards
-  employee: ERGO
-  industry: Health Insurance
-  location: Cologne
-  start: 2022-12-01
-  end: 2023-04-30
-  description:
-    - Automatisation and testing of  actuarial computations in R
-    - Developing GUIs for automated actuarial workflows
-    - Implementing a CI/CD pipeline
-  tag:
-    - R
-    - Shiny
-    - GitHub
-    - Actuary
-DevOps Engineer:
+    - Optimization
+Infrastructure and Simulation Engineer:
   punchline: Set up the first AUTOSAR conform Software in the Loop infrastructure
   employee: Vaillant
   industry: HVAC Systems

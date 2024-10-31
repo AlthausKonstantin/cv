@@ -141,11 +141,11 @@
 \NewDocumentCommand{\printinfo}{m m o}{%
 	\BeginAccSupp{method=escape,ActualText={#1:~#2}}
 	\IfNoValueTF{#3}{%
-		\mbox{\textcolor{accent}{\normalfont #1}~\utffriendlydetokenize{#2}\hspace{2em}}%
+		\mbox{\textcolor{accent}{\normalfont #1}~\textcolor{emphasis}{\utffriendlydetokenize{#2}\hspace{2em}}}%
 	}{%
 		\if@withhyper%
 			\mbox{\begin{varwidth}{1.2\columnwidth}\textcolor{accent}{\normalfont #1}~
-					\href{#3}{\utffriendlydetokenize{#2}}\hspace{2em}\end{varwidth}}%
+					\href{#3}{\utffriendlydetokenize{\textcolor{emphasis}{#2}}}\hspace{2em}\end{varwidth}}%
 		\else%
 			\ClassWarning{Please specify [withhyper] option to enable hyperlinks. Printing out full hyperlink prefix #1 for now.}%
 			\mbox{\textcolor{accent}{\normalfont #1}~{\utffriendlydetokenize{#3#2}}\hspace{2em}}%
@@ -269,7 +269,7 @@
 	\endgroup\medskip
 }
 
-\renewenvironment{quote}{\color{accent}\itshape\large}{\par}
+\renewenvironment{quote}{\color{emphasis}\itshape\large}{\par}
 
 % Fork (before v1.6.5a): Two bigskip tags added for better section separation
 \newcommand{\cvsection}[2][]{%
