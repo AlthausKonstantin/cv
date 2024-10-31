@@ -11,8 +11,7 @@ Explicit Extrapolation Methods:
   tag:
     - Julia
     - GitHub
-    - Open Source
-    - Research
+    - Scientific Computing
   urls:
     - github: https://github.com/AlthausKonstantin/Extrapolation
     - doi: https://doi.org/10.1109/HPEC55821.2022.9926357
@@ -29,19 +28,15 @@ Rare Event Estimation:
   tag:
     - Python
     - CI/CD Pipelines
-    - GitHub
-    - Docker
     - Google Cloud
-    - Data Science
     - Numerical Experiments
-    - Open Source
-    - Research
+    - Particle Simulations
     - Optimization
     - Stochastic Analysis
   urls:
     - github: https://github.com/AlthausKonstantin/rareeventestimation
     - doi: https://doi.org/10.1137/23M1565966
-Modelling a traffic light assistant:
+Modelling a Traffic Light Assistant:
   subtitle: Joint project with Continental
   punchline: Optimally drive a car through traffic lights
   end: '2021-03-01'
@@ -69,8 +64,7 @@ Procedural CV:
     - Encrypt sensitive data
   tag:
     - Python
-    - CI/CD Pipelines
-    - GitHub
+    - GitHub Actions
     - Docker
     - LaTeX
     - Open Source
