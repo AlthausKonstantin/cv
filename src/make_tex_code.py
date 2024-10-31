@@ -419,7 +419,7 @@ def get_icon_for_link(url: str) -> str:
     if "github" in url:
         return "faGithub"
     if "doi" in url:
-        return "faDocument"
+        return "faFile"
     else:
         return "faGlobe"
 
