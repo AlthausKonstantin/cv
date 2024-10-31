@@ -230,7 +230,7 @@ def yaml_to_tex(section: str, data_dir: Path, tex_dir: Path) -> Path:
     has_durations &= "end" in data.columns
     if has_durations:
         data[["start", "end"]] = data[["start", "end"]].apply(pd.to_datetime)
-        data = data.map(lambda x: clean_string(x) if isinstance(x, str) else x)
+        data = data.applymap(lambda x: clean_string(x) if isinstance(x, str) else x)
         data = data.sort_values("start", ascending=False)
     latex_command = LATEX_COMMANDS[section]
     data["tex_code"] = data.apply(row_to_tex_code, axis=1, latex_command=latex_command)
