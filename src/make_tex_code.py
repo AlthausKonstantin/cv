@@ -1,6 +1,6 @@
 """ Functions to decrypt, load and arrange data in tex source code. """
 import subprocess
-from shutil import move
+from shutil import move, which
 import tempfile
 import warnings
 from os import environ
@@ -25,6 +25,13 @@ from constants import (BIBLIOGRAPHY, BIBLIOGRAPHY_TEMPLATE,
 
 def compile_main() -> None:
     """Compile main.tex with lualatex and biber to get references right."""
+    if which("lualatex") is None or which("biber") is None:
+        warnings.warn(
+            "Skipping PDF compilation because required binaries are missing: "
+            "lualatex and/or biber. TeX source files were generated successfully."
+        )
+        return
+
     with tempfile.TemporaryDirectory() as dir:
         for i in range(2):
             # complie twice to get the references right
@@ -230,7 +237,8 @@ def yaml_to_tex(section: str, data_dir: Path, tex_dir: Path) -> Path:
     has_durations &= "end" in data.columns
     if has_durations:
         data[["start", "end"]] = data[["start", "end"]].apply(pd.to_datetime)
-        data = data.applymap(lambda x: clean_string(x) if isinstance(x, str) else x)
+        cleaner = lambda x: clean_string(x) if isinstance(x, str) else x
+        data = data.map(cleaner) if hasattr(data, "map") else data.applymap(cleaner)
         data = data.sort_values("start", ascending=False)
     latex_command = LATEX_COMMANDS[section]
     data["tex_code"] = data.apply(row_to_tex_code, axis=1, latex_command=latex_command)
