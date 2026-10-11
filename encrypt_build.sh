@@ -2,7 +2,7 @@
 # encrypt all elements in ./Build/*.pdf using age
 # if the env var AGE_RECIPIENT exists use its content as a recipient
 # else error 
-
+echo $SOPS_AGE_KEY
 # check if the env var AGE_RECIPIENT exists
 if [ -z "$AGE_RECIPIENT" ]; then
     echo "AGE_RECIPIENT is not set"
