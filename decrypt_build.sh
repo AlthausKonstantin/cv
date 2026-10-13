@@ -9,11 +9,20 @@ if [ ! -f "./keys.txt" ]; then
     exit 1
 fi
 
-# loop over all age files in ./Build
+shopt -s nullglob
+
+found=false
 for file in ./dockervolume/*.age; do
-    # decrypt the file using age
-    age -d -i "./keys.txt" -o "${file%.age}" "$file"
-    # remove the original file
-    rm "$file"
-    echo "Decrypted $file"
+    found=true
+    if age -d -i "./keys.txt" -o "${file%.age}" "$file"; then
+        rm -- "$file"
+        echo "Decrypted $file"
+    else
+        echo "Failed to decrypt $file" >&2
+        exit 1
+    fi
 done
+
+if [ "$found" = false ]; then
+    echo "No .age files found in ./dockervolume"
+fi
