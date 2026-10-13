@@ -1,6 +1,6 @@
 # /bin/bash
-# decrypt all elements in ./Build/*.age using age
-# use identity file /Users/konstantinalthaus/Library/Application Support/sops/age/keys.txt
+# decrypt all elements in ./dockervolume/*.age using age
+# expects an age identity file at ./keys.txt
 
 # check if the identity file exists
 # if not, error
