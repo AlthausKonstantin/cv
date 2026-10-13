@@ -12,6 +12,7 @@
 .DS_Store
 # sensitive data
 **/*unencrypted.yaml
+./keys.txt
 # tex files
 **/*.tex
 !./tex/main.tex
